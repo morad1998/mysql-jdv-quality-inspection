@@ -1,0 +1,6 @@
+﻿docker : ERROR 6497 (HY000) at line 1: Missing UPDATE tag on `jdv_spike`.`customers`.name, path '$.customer_name'.
+At line:10 char:1
++ docker exec -i mysql-jdv-quality-db `
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR 6497 (HY0...customer_name'.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError

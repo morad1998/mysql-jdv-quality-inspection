@@ -1,0 +1,22 @@
+﻿+-------------------+---------------+----------------------------------+
+| stale_document_id | stale_product | stale_etag                       |
++-------------------+---------------+----------------------------------+
+| 3                 | Flour         | a5e3d7a265f90a6f177f6ab2f7bb51e0 |
++-------------------+---------------+----------------------------------+
++----------+-------------------+--------+
+| order_id | product           | amount |
++----------+-------------------+--------+
+|        3 | Whole Wheat Flour |  20.00 |
++----------+-------------------+--------+
++-------------------+----------------------------------+
+| current_product   | current_etag                     |
++-------------------+----------------------------------+
+| Whole Wheat Flour | e5e59fcaed5acdabf94cf70137ccf911 |
++-------------------+----------------------------------+
+docker : ERROR 6494 (HY000) at line 34: Cannot update JSON duality view. The ETAG of the document in the database did not match the ETAG
+'"a5e3d7a265f90a6f177f6ab2f7bb51e0"' passed in.
+At line:4 char:1
++ docker exec -i mysql-jdv-quality-db `
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR 6494 (HY0...e0"' passed in.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError

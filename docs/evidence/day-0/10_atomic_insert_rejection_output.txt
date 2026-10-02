@@ -1,0 +1,17 @@
+﻿docker : ERROR 1062 (23000) at line 9: Duplicate entry '4' for key 'orders.PRIMARY'
+At line:23 char:1
++ docker exec -i mysql-jdv-quality-db `
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR 1062 (230...orders.PRIMARY':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
++-------------------+
+| customer_3_before |
++-------------------+
+|                 0 |
++-------------------+
++----------------+
+| order_4_before |
++----------------+
+|              1 |
++----------------+
