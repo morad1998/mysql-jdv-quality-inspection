@@ -1,0 +1,10 @@
+# Reference only. Create the function with:  fn init --runtime python jdv-genai-gateway
+# then copy func.py, core.py, oci_chat.py and requirements.txt over the generated ones, and keep the generated
+# runtime, build_image and run_image lines (they match your Fn CLI version). Add the memory and timeout lines below.
+schema_version: 20180708
+name: jdv-genai-gateway
+version: 0.0.1
+runtime: python
+entrypoint: /python/bin/fdk /function/func.py handler
+memory: 512
+timeout: 120
