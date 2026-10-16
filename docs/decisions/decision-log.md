@@ -172,3 +172,16 @@
 - Constraint: JSON keys inside the new array come back in the same normalized order as elsewhere: shorter keys first, then alphabetical. Array elements came back in primary-key order again, still not guaranteed.
 - Observation (amends the open cause note in D-019): checklist ids are contiguous (1 to 6) while measurement ids skip (1, 2, 4, 5, then 10 and 11). Both are created by the same INSERT ... SELECT in the card trigger, but a card creates 3 checklist rows and 2 measurement rows. That fits InnoDB reserving auto-increment values in growing batches (1, 2, 4) for INSERT ... SELECT: with 2 rows one reserved id is left unused, with 3 rows none is. Counting failed and rolled-back inserts, the hypothesis predicts the observed measurement ids exactly. It is a hypothesis that fits all observations, not a direct test. The practical rule is unchanged: clients must not assume contiguous ids.
 - Verification: docs/evidence/day-2/d2-4-create.txt, d2-4-verify.txt, d2-4-probes.txt; database/02_duality_views/11 to 13.
+
+## D-021 - Third nested array (findings) in inspection_card_dv
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: D2 step 5 adds the quality findings as a third nested array ("findings": finding_id, severity, finding_status, description, raised_by, raised_at, resolved_at) next to the unit object, the measurements array and the checklist array. The view stays read-only (no WITH clause).
+- Constraint: Three independent arrays and a nested object coexist in one read-only document and agree with the tables (checks Z1 to Z8). Element counts were 4, 6 and 1 for measurements, checklist and findings, equal to the table row counts.
+- Constraint: A card without findings is shown as "findings": null (JSON null), as for measurements. Card 2 had no findings and showed null; its ETag still changed when the array was added, because the document shape changed.
+- Constraint: The ETag covers the findings array. A second finding inserted directly into the table (inside a rolled-back transaction) gave two elements in primary-key order ([1, 2]) and a different ETag (a7406ed8e5cb22ffaabee4c5464c7539 became b803912342788dd9ce2371d8d2239105 for card 1).
+- Implication for D-015 (AI assistant): the free-text finding description appears verbatim in the document. Any document that an AI model reads can therefore carry text typed by a user. The agent-facing views must be separate from the application view, and the prompt-injection test required by D-015 must put hostile text in a finding description.
+- Constraint: A real change to a findings element was refused with ERROR 6497 and the data was unchanged. The path in the message followed the B-016 pattern (see B-016).
+- Side effect: the rolled-back insert advanced the quality_finding AUTO_INCREMENT counter; the next automatic finding id is expected to be 3.
+- Verification: docs/evidence/day-2/d2-5-create.txt, d2-5-verify.txt and d2-5-probe-b016.txt; database/02_duality_views/14 to 16.

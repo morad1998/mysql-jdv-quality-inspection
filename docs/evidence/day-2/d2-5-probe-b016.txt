@@ -1,0 +1,73 @@
++---------------------+
+| test_step           |
++---------------------+
+| probe views created |
++---------------------+
++------------+-----------------+-----------+--------+
+| TABLE_NAME | ROOT_TABLE_NAME | READ_ONLY | STATUS |
++------------+-----------------+-----------+--------+
+| probe_a_dv | inspection_card | 1         | valid  |
+| probe_b_dv | inspection_card | 1         | valid  |
++------------+-----------------+-----------+--------+
++---------------------------------+
+| test_step                       |
++---------------------------------+
+| A1 probe_a root field opened_by |
++---------------------------------+
+docker : ERROR 6497 (HY000) at line 76: Missing UPDATE tag on `quality_inspection`.`inspection_card`.opened_by, path 
+'$.opened_by'.
+At line:2 char:3
++   docker exec -i mysql-jdv-quality-db sh -c 'MYSQL_PWD="$MYSQL_PASSWO ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR 6497 (HY0... '$.opened_by'.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
++----------------------------------------+
+| test_step                              |
++----------------------------------------+
+| A2 probe_a array element result_status |
++----------------------------------------+
+ERROR 6497 (HY000) at line 81: Missing UPDATE tag on `quality_inspection`.`measurement_result`.result_status, path 
+'$.measurements[0].result_status'.
+ERROR 6497 (HY000) at line 86: Missing UPDATE tag on `quality_inspection`.`inspection_card`.opened_by, path 
+'$.opened_by'.
++---------------------------------+
+| test_step                       |
++---------------------------------+
+| B1 probe_b root field opened_by |
++---------------------------------+
++--------------------------------------------+
+| test_step                                  |
++--------------------------------------------+
+| B2 probe_b nested object field unit_serial |
++--------------------------------------------+
+ERROR 6497 (HY000) at line 91: Missing UPDATE tag on `quality_inspection`.`production_unit`.unit_serial, path 
+'$.unit.unit_serial'.
++----------------------------------------+
+| test_step                              |
++----------------------------------------+
+| B3 probe_b array element result_status |
++----------------------------------------+
+ERROR 6497 (HY000) at line 96: Missing UPDATE tag on `quality_inspection`.`inspection_card`.unit_id, path 
+'$.unit.unit_id'.
++--------------------------------------------------------------------------------------------------------+
+| test_step                                                                                              |
++--------------------------------------------------------------------------------------------------------+
+| FINAL: probe views gone, data at baseline. EXPECT 0 probe views, opened_by 1 and 2, 4 measurement rows |
++--------------------------------------------------------------------------------------------------------+
++------------------+
+| probe_views_left |
++------------------+
+|                0 |
++------------------+
++---------+-----------+
+| card_id | opened_by |
++---------+-----------+
+|       1 |         1 |
+|       2 |         2 |
++---------+-----------+
++------------------+----------------+
+| measurement_rows | result1_status |
++------------------+----------------+
+|                4 | RECORDED       |
++------------------+----------------+
