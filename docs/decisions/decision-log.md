@@ -198,3 +198,19 @@
 - Constraint: A real change to an attachments element was refused with ERROR 6497, following the B-016 pattern. The data was unchanged afterwards.
 - Implication for D-015 (AI assistant): storage_key is an object location and file_name is user-supplied text. The agent-facing views must leave out storage_key and treat file_name as untrusted text, like the finding description (D-021).
 - Verification: docs/evidence/day-2/d2-6-create.txt, d2-6-verify.txt and d2-6-probe-short-key.txt; database/02_duality_views/17 to 19.
+
+## D-023 - Separate writable edit view, root close path (D2 step 7a)
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: inspection_card_edit_dv is a separate writable view over inspection_card with WITH (UPDATE) on the root object only (no INSERT, no DELETE). It projects _id, card_status, disposition, closed_by and closed_at. The read view inspection_card_dv is unchanged: a regression check showed it still valid, READ_ONLY 1, with the same ETags as in D2 step 6 (3771df75..., a1d3e931...).
+- Constraint: Modification tags apply per object, so the fields an object projects are exactly the fields a document can write. unit_id and opened_by are not projected and cannot be written through this view.
+- Constraint: Writing a path the view does not project fails with ERROR 6489 "Path '$.x' is not mapped to any column of `quality_inspection`.`inspection_card`." The text is the same for an unknown property (bogus) and for a real table column that the view does not project (opened_by). "Any column" refers to the view mapping, not to the table.
+- Constraint: Database rules still apply to document writes. Closing through the document with a pending checklist item raised trigger error 50002; with an open CRITICAL finding it raised 50003; closing without a disposition raised CHECK error 3819 (chk_card_disposition_final); closing with every rule satisfied succeeded. Trigger errors keep their own numbers, so an API can map them to messages.
+- Constraint: A string such as "2026-10-16 02:00:00.000000" is accepted for a DATETIME field in a document write; the table stores 2026-10-16 02:00:00.
+- Constraint: Optimistic concurrency works in the edit view. A stale document was refused with ERROR 6494 and the card was unchanged.
+- Constraint: The ETag reflects the projected document. A direct change to an unprojected column (opened_by) did not change the ETag of the edit-view document (b6f72c3e... before and after). With D-019 to D-022 this fits an ETag derived from the projected content; how MySQL computes it was not examined.
+- Constraint: The edit view has its own ETags (root-only version: 9052eccb... for card 1 and b59ab53f... for card 2), different from the read view. A client must read the document from the edit view to get the ETag it must send back when writing. A client that displays the read view and writes through the edit view therefore needs two reads.
+- Constraint: The generated column open_unit_key is maintained correctly under document writes: IN_PROGRESS through the document gave open_unit_key 3, and CLOSED through the document gave NULL.
+- Constraint: Role permissions are not enforced by the database (D-010). Any account allowed to update through this view can set the projected fields to any value that the CHECK constraints and triggers accept. Reopening a closed card through a document is not yet tested (planned for step 7b).
+- Verification: docs/evidence/day-2/d2-7a-create.txt, d2-7a-verify.txt and d2-7a-writes.txt; database/02_duality_views/20 to 22 and 98.

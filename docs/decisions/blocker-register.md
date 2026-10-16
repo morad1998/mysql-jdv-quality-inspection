@@ -61,10 +61,12 @@
 
 ## B-008 - Generated column compatibility with Duality Views
 
-- Status: WATCH
+- Status: RESOLVED
 - Date identified: 2026-10-16
-- Impact: inspection_card contains the virtual generated column open_unit_key (D-012). A READ-ONLY Duality View over inspection_card that does not expose the column was created and is valid (D2 step 1, 2026-10-16). A WRITABLE view over this table has not been tested.
-- Control: Re-check when write annotations are added to a view over inspection_card. If MySQL rejects the table or column for a writable view, enforce the one-active-card rule with a trigger instead and record the limitation.
+- Symptom: It was unknown whether MySQL accepts a Duality View over inspection_card, which has the virtual generated column open_unit_key (D-012), and in particular a writable one.
+- Resolution: A read-only view (D2 step 1) and an update-enabled view (D2 step 7a: WITH (UPDATE), open_unit_key not projected) were both accepted and are valid. The generated column was maintained correctly when rows were updated through documents: IN_PROGRESS gave open_unit_key 3 and CLOSED gave NULL.
+- Limit: A view with INSERT or DELETE enabled over inspection_card has not been created. If one is added, reopen this item; the one-active-card rule would then also need a test through document inserts.
+- Verification: docs/evidence/day-2/d2-1-create.txt and d2-7a-create.txt, d2-7a-writes.txt (tests A4 and B0).
 
 ## B-009 - AI model provider not selected
 
@@ -133,5 +135,5 @@
 ## Current blocking summary
 
 - Active OPEN blockers: None.
-- Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path).
-- Next controlled gate: write phase: a separate edit view with modification tags (tests B-008); design agreed before scripts are written.
+- Remaining WATCH items: B-007 (MySQL REST Service availability), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path).
+- Next controlled gate: D2 step 7b: add the measurements and checklist arrays (update only) to inspection_card_edit_dv; atomic-failure, close-in-one-document, reopen and one-active-card tests through documents.
