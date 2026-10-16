@@ -1,0 +1,4 @@
+# Line endings: LF in the repository for text sources and evidence
+*.sql text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
