@@ -137,3 +137,13 @@
 - Constraint: The dump contains no users or grants. After loading it, the application account needs rights on jdv_spike, because the Duality Views there are defined by quality_app and fail with error 1356 without them (see B-013).
 - Constraint: Dumps are created inside the container and copied out with docker cp, because Windows PowerShell redirection changes the encoding.
 - Verification: docs/evidence/day-1/backup/ and docs/runbooks/restore-from-backup.md.
+
+## D-018 - inspection_card_dv exposes real columns only
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: The first Duality View over inspection_card, inspection_card_dv, is read-only (no WITH clause) and exposes the card columns card_id (as _id), unit_id, card_status, disposition, opened_by, opened_at, closed_by and closed_at. The generated column open_unit_key is an enforcement mechanism (D-012) and is not exposed.
+- Constraint: MySQL writes DATETIME values inside a document as plain strings in the form "2026-10-16 01:13:25.000000": a space between date and time, microseconds, no T and no Z. The values are stored in UTC but the document does not say so. The API layer must label or convert them.
+- Constraint: SQL NULL appears in a document as JSON null.
+- Constraint: A no-change update through a read-only view (setting a field to the value it already has) is accepted silently. A real change is refused with error 6497 (Missing UPDATE tag on the column and path).
+- Verification: docs/evidence/day-2/ (V1 to V5, F1 to F5) and database/02_duality_views/.

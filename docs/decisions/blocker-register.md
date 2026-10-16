@@ -63,8 +63,8 @@
 
 - Status: WATCH
 - Date identified: 2026-10-16
-- Impact: inspection_card contains the virtual generated column open_unit_key (D-012). It has not been tested with a JSON Duality View over inspection_card.
-- Control: Re-check when the first inspection_card view is created in D2. If MySQL rejects the table or column, enforce the one-active-card rule with a trigger instead and record the limitation.
+- Impact: inspection_card contains the virtual generated column open_unit_key (D-012). A READ-ONLY Duality View over inspection_card that does not expose the column was created and is valid (D2 step 1, 2026-10-16). A WRITABLE view over this table has not been tested.
+- Control: Re-check when write annotations are added to a view over inspection_card. If MySQL rejects the table or column for a writable view, enforce the one-active-card rule with a trigger instead and record the limitation.
 
 ## B-009 - AI model provider not selected
 
@@ -112,8 +112,16 @@
 - Resolution: A typing error in the password-generation command left the passwords empty. Re-ran with New-Guid, and the rehearsal script now stops if a password is not 32 characters or if the container exits.
 - Verification: The retry started, the restore exit code was 0, and the data compared identical.
 
+## B-015 - Weak negative test hid the read-only behavior
+
+- Status: RESOLVED
+- Date identified: 2026-10-16
+- Symptom: The first read-only test updated a field to the value it already had. MySQL returned no error, which looked like a failure of the read-only protection.
+- Resolution: Added a test that makes a real change inside a transaction that is rolled back. MySQL refused it with ERROR 6497 and the data and ETag were unchanged afterwards. A no-change update is accepted silently (see D-018).
+- Verification: docs/evidence/day-2/d2-1-followup.txt (F1 to F5).
+
 ## Current blocking summary
 
 - Active OPEN blockers: None.
 - Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider), B-012 (second backup copy).
-- Next controlled gate: Create the first read-only inspection_card Duality View (D2) from the verified D1 baseline.
+- Next controlled gate: D2 step 2: add the production unit as a nested object in inspection_card_dv.
