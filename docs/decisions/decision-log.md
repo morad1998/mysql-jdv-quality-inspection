@@ -161,3 +161,14 @@
 - Constraint: DECIMAL values keep their scale inside a document (1000.250). JSON keys come back in MySQL's normalized order (shorter keys first, then alphabetical), not the order written in the view. Array elements came back in primary-key order in every test, but nothing in the view guarantees that order, so add an explicit order if a client depends on it.
 - Constraint: Primary key values are not contiguous (measurement_result ids 1, 2, 4, 5, then 10 and 11). This is consistent with InnoDB allocating ids in batches for the INSERT ... SELECT inside the card trigger, but that cause is not proven. Clients must not assume contiguous ids.
 - Verification: docs/evidence/day-2/d2-2-*.txt and d2-3-*.txt; database/02_duality_views/05 to 10.
+
+## D-020 - Two independent nested arrays in inspection_card_dv
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: D2 step 4 adds the checklist results as a second nested array ("checklist": checklist_result_id, checklist_definition_id, answer_code, answered_by, answered_at) next to the measurements array and the nested unit object. The view stays read-only (no WITH clause).
+- Constraint: Two independent arrays and a nested object coexist in one read-only document and all agree with the tables (checks Y1 to Y8; the step 3 measurements array still matched 4 of 4).
+- Constraint: Adding the array changed the ETag of both cards again (see the ETag table in docs/evidence/day-2/d2-step4-summary.md). The rule from D-019 holds: an ETag is comparable only within one view definition.
+- Constraint: JSON keys inside the new array come back in the same normalized order as elsewhere: shorter keys first, then alphabetical. Array elements came back in primary-key order again, still not guaranteed.
+- Observation (amends the open cause note in D-019): checklist ids are contiguous (1 to 6) while measurement ids skip (1, 2, 4, 5, then 10 and 11). Both are created by the same INSERT ... SELECT in the card trigger, but a card creates 3 checklist rows and 2 measurement rows. That fits InnoDB reserving auto-increment values in growing batches (1, 2, 4) for INSERT ... SELECT: with 2 rows one reserved id is left unused, with 3 rows none is. Counting failed and rolled-back inserts, the hypothesis predicts the observed measurement ids exactly. It is a hypothesis that fits all observations, not a direct test. The practical rule is unchanged: clients must not assume contiguous ids.
+- Verification: docs/evidence/day-2/d2-4-create.txt, d2-4-verify.txt, d2-4-probes.txt; database/02_duality_views/11 to 13.

@@ -124,11 +124,11 @@
 
 - Status: WATCH
 - Date identified: 2026-10-16
-- Impact: In the D2 step 3 view, a real change to measurements[0].result_status was refused with ERROR 6497, but the error named a different path: Missing UPDATE tag on inspection_card.unit_id, path $.unit.unit_id. In steps 1 and 2 the error named the path that was changed (opened_by, then unit.unit_serial). The refusal itself is correct: the data and the ETag were unchanged afterwards. The error text is not a reliable pointer to the offending change when an array is involved, and the cause is unknown.
-- Control: Characterize it with probes in D2 step 4 (a root field, a nested object field and an array element field, in the same view). Re-check when write annotations are added, because it may affect which annotations an array-element update needs. Do not document the error-path behavior as a rule until it is characterized.
+- Impact: ERROR 6497 names the changed path for root-level changes and nested-object changes, but names inspection_card.unit_id, path $.unit.unit_id for every change inside an array element. Evidence, D2 step 4 probes (9 of 9 refused, data and ETags unchanged afterwards): root opened_by named $.opened_by (correct); unit.unit_serial named $.unit.unit_serial (correct); measurements[0].result_status, measurements[0].measured_value, measurements[1].result_status, checklist[0].answer_code, and the same change on card 2 all named $.unit.unit_id; one statement changing root opened_by and a checklist element together named $.opened_by. The behavior is deterministic (a repeat gave the same error), independent of the card, the array, the element index and the field. The refusal is correct; only the path in the message is misleading for array changes. The cause is unknown.
+- Control: Do not use the path in error 6497 to locate the offending change when an array is involved. A hypothesis (the named path is the join column, or the first field, of the first nested object) is tested with throwaway views in D2 step 5 (script 16). Re-check when write annotations are added, because it may affect which annotations an array-element update needs.
 
 ## Current blocking summary
 
 - Active OPEN blockers: None.
 - Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path).
-- Next controlled gate: D2 step 4: add the checklist results as the second nested array in inspection_card_dv.
+- Next controlled gate: D2 step 5: add the findings as the third nested array, and test the B-016 hypothesis with throwaway probe views.
