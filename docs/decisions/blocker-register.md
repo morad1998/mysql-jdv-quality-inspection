@@ -150,8 +150,18 @@
 - Limit: Path B2 has not been replayed end to end, and the second copy (B-012) is still open.
 - Verification: docs/evidence/day-2/backup/.
 
+## B-019 - The in-memory test model hid a database behavior
+
+- Status: RESOLVED
+- Date identified: 2026-10-16
+- Symptom: All 50 route and unit tests passed, but the first run of the integration tests against the real database failed: closing a closed card a second time returned 200, not the expected 409.
+- Cause: The database accepts a write that changes nothing (D-025). The in-memory model kept milliseconds in its timestamps, so every repeated close looked like a change to it and was refused.
+- Resolution: The API refuses a repeated close itself (D-028) and sends whole-second timestamps. Route tests were added for both. The integration tests now wait 1.1 seconds and ask again.
+- Limit: The failing first run was shown in the chat and is not stored as a file; this entry and D-028 describe it.
+- Verification: docs/evidence/day-3/api-integration.txt (16 of 16 pass).
+
 ## Current blocking summary
 
 - Active OPEN blockers: None.
 - Remaining WATCH items: B-007 (MySQL REST Service availability), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path).
-- Next controlled gate: Design Pack v4; then the API phase (design agreed before code).
+- Next controlled gate: architecture and ER diagrams; when-to-use guidance; README and clean-environment replay; article (the API is committed).

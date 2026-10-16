@@ -249,3 +249,31 @@
 - Constraint: Not rehearsed: restore with docker compose, granting the jdv_spike rights before loading the dump, restoring a Docker volume snapshot, and Path B2 (a full rebuild from scripts) as an end-to-end replay on a clean container. A clean-environment replay is still owed before submission (plan phases D8 and D10).
 - Constraint: The second copy on different storage (B-012) is still not made for either set. The repository, with its history on GitHub, holds the scripts; only the exact test data state is not stored elsewhere.
 - Verification: docs/evidence/day-2/backup/ and docs/runbooks/restore-from-backup.md (A8, the D2 rehearsal result and Path B2).
+
+## D-027 - Demo API over the two Duality Views (D3)
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: A small server-side API in api/ shows how an application uses the two views. It is written in TypeScript that Node.js runs directly (no build step) and uses Node's built-in http module and node:test; the only runtime dependency is mysql2. Installed versions (recorded in api/package-lock.json): Node.js 24.20.0, npm 11.19.0, mysql2 3.24.6, typescript 7.0.2, @types/node 26.6.5.
+- Endpoints: GET /api (self-description), GET /api/health, GET /api/cards, POST /api/cards, GET /api/cards/:id (read view), GET /api/cards/:id/edit (edit view), PUT /api/cards/:id/edit (answers and measurements, If-Match required), POST /api/cards/:id/close (SUPERVISOR only, If-Match required). Reference and error table: docs/api/README.md.
+- Decision: Closing a card is two calls, mirroring MySQL (D-024): write the answers, read the new ETag, then close. A stale ETag returns HTTP 412 with the current document. Database errors are mapped by error number only: 50002 and 50003 and 50020 to 50022 and 1062 give 409, 3819 and 1452 give 422, 6494 gives 412, 6489 gives 400 and 6497 gives 500. The text of a database error is never forwarded.
+- Decision: Authentication is a demo header (X-Demo-User) that selects a seeded app_user; INSPECTOR may write, SUPERVISOR may close. It is not security (D-010). The API validates every body and never forwards a property it does not know, so error 6489 should not occur.
+- Decision: Close sets the status CLOSED with the disposition PASS or REJECT. The status REJECTED is not reachable through the API until the open question D-011 is answered.
+- Decision: Timestamps the server writes (who answered, when) are UTC, truncated to whole seconds, because the card tables keep no fractional seconds.
+- Constraint: Every statement uses mysql2's text protocol (pool.query). Prepared statements against Duality Views were not tested.
+- Constraint: Tests are of two kinds. 54 unit and route tests run against an in-memory model of the database (api/test/fake-db.ts) and prove the API's own logic. 16 integration tests (npm run test:integration) run against the real Docker database, create cards through the API on units 2 and 3, delete them directly afterwards and check that the counts and the ETags of cards 1 and 2 equal the starting state.
+- Constraint: Not covered: other operating systems, other MySQL versions, concurrency beyond one request at a time, findings and attachments, INSERT or DELETE through a view, a card whose result arrays are JSON null.
+- Verification: docs/evidence/day-3/ (api-npm-test.txt, api-typecheck.txt, api-integration.txt, api-npm-ls.txt, db-baseline-after.txt) and docs/api/example-transcript.md (14 requests recorded against the real database; the card it created was deleted afterwards).
+
+## D-028 - Findings from running the API against MySQL 9.7.2
+
+- Status: Approved
+- Date: 2026-10-16
+- Constraint: The mysql2 driver logged in to MySQL 9.7.2 with the application account, returned JSON columns as objects, and a whole document built by the API and written with UPDATE ... SET data = CAST(? AS JSON) was accepted by the update-enabled view and gave the same results as the JSON_SET scripts of D2.
+- Constraint: A card can be closed through the edit view with status CLOSED and disposition REJECT, as with PASS. Closing, answering and the lock behaved exactly as in the SQL tests of D2.
+- Constraint: A reopen attempt through the API (PUT with card_status IN_PROGRESS on a closed card) was refused with ERROR 50020 mapped to 409; the card and its ETag were unchanged. The lock trigger therefore answers before any CHECK constraint.
+- Finding: In the first integration run, closing a card that was already closed returned 200, not 409, when it was asked straight after the first close. The two requests carried the same status, disposition, user and a time in the same second, so the write changed nothing, and the database accepts a write that changes nothing (D-025). A second later it would have changed closed_at and raised 50020. The cause is inferred from the matching second in the response, not observed directly.
+- Decision: The API answers a repeated close itself with 409 CARD_FINAL, before the ETag check and before any database write, so the answer no longer depends on timing. This is the only case in which the API answers before the database. Every other write to a final card is still answered by the database lock. The server's timestamps are truncated to whole seconds so that what it sends equals what the column keeps.
+- Lesson: The in-memory model stored times with milliseconds, so it could not show this behavior. The route tests prove the API's logic, and only the integration tests show what MySQL does (see B-019).
+- Observation: After the integration and example runs the auto-increment counters had advanced (card ids from 931 to 939 in the runs recorded here); ids are not contiguous and must not be assumed to be (D-019, D-020).
+- Verification: docs/evidence/day-3/api-integration.txt and docs/api/example-transcript.md.

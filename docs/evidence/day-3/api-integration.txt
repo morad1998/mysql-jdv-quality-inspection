@@ -1,0 +1,31 @@
+
+> test:integration
+> node --env-file=../.env --test test/integration.test.ts
+
+Γû╢ integration against the Docker MySQL database
+  Γ£ö opens card A on unit 3: a plain INSERT, and the trigger creates the PENDING rows (41.6326ms)
+  Γ£ö serves the edit document: smaller than the read document and with its own ETag (31.7192ms)
+  Γ£ö refuses a stale ETag with 412 and returns the current document (29.9967ms)
+  Γ£ö never forwards an unknown property to the database (11.4866ms)
+  Γ£ö moves OPEN to IN_PROGRESS through the document (43.306ms)
+  Γ£ö writes answers and a measurement; the server fills who and when (28.3789ms)
+  Γ£ö treats the old ETag as stale after that write (6.6275ms)
+  Γ£ö maps the one-active-card rule (error 1062) to 409 (8.0061ms)
+  Γ£ö lets only a SUPERVISOR close (22.3263ms)
+  Γ£ö opens card B on unit 2 and maps the database close rule 50002 to 409 while items are PENDING (53.741ms)
+  Γ£ö closes card A (the second write of the two-write close) (33.2003ms)
+  Γ£ö a changed answer on a closed card is refused by the database lock (error 50022 -> 409 CARD_FINAL) (39.0017ms)
+  Γ£ö closing a closed card again is refused by the API with 409 CARD_FINAL, at any time (1161.161ms)
+  Γ£ö OBSERVATION: a reopen attempt through PUT (card_status IN_PROGRESS on a closed card) is refused (28.6961ms)
+  Γä╣ reopen attempt answered 409 CARD_FINAL db_errno=50020
+  Γ£ö opens card C on unit 3 now that A is closed, answers everything and closes it with REJECT (89.6748ms)
+  Γ£ö shows the writes in the read view and in the list (26.6402ms)
+Γ£ö integration against the Docker MySQL database (1722.0537ms)
+Γä╣ tests 16
+Γä╣ suites 1
+Γä╣ pass 16
+Γä╣ fail 0
+Γä╣ cancelled 0
+Γä╣ skipped 0
+Γä╣ todo 0
+Γä╣ duration_ms 1885.5726

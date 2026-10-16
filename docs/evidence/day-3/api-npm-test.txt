@@ -1,0 +1,90 @@
+
+> test
+> node --test test/unit.test.ts test/routes.test.ts
+
+Γû╢ basics
+  Γ£ö answers the health check without a user (15.3792ms)
+  Γ£ö needs a known demo user for everything else (15.4655ms)
+  Γ£ö describes itself at /api without a user (a browser visit shows what to do) (13.8458ms)
+  Γ£ö answers 404 and 405 correctly (55.4433ms)
+  Γ£ö lists cards as summaries (2.1306ms)
+  Γ£ö rejects a bad id and an unknown card (27.5163ms)
+Γ£ö basics (135.0919ms)
+Γû╢ reading
+  Γ£ö serves the read document with its ETag and a link to the edit document (1.6788ms)
+  Γ£ö serves a different, smaller edit document with its own ETag (29.9747ms)
+Γ£ö reading (32.0086ms)
+Γû╢ writing answers (two-write close, step one)
+  Γ£ö needs If-Match: 428 when missing, 400 when unusable (17.1267ms)
+  Γ£ö rejects bad bodies before touching the database (99.3262ms)
+  Γ£ö rejects a body over the size limit (5.8128ms)
+  Γ£ö answers 412 with the current document when the ETag is stale (3.3682ms)
+  Γ£ö refuses a result id that is not on the card with 422 (10.1906ms)
+  Γ£ö writes the answers, fills who and when, and returns a new ETag; the old ETag is then stale (41.727ms)
+Γ£ö writing answers (two-write close, step one) (178.2352ms)
+Γû╢ closing (two-write close, step two) and the final-card lock
+  Γ£ö lets only a SUPERVISOR close (18.1415ms)
+  Γ£ö maps the database close rule 50002 to 409 when an item is unanswered (52.6709ms)
+  Γ£ö closes in two writes: answers first, then the close with the new ETag (31.5576ms)
+  Γ£ö answers 409 CARD_FINAL for any change to a closed card (5.2089ms)
+  Γ£ö refuses closing a closed card again with 409 from the API itself, without a database write (30.6752ms)
+  Γ£ö maps a reopen attempt (card_status IN_PROGRESS on a closed card) to the database lock answer 50020 (45.8685ms)
+  Γ£ö rejects a bad close body (54.0214ms)
+Γ£ö closing (two-write close, step two) and the final-card lock (238.6483ms)
+Γû╢ opening cards
+  Γ£ö opens a card, returns 201 with Location and the read document (1.5468ms)
+  Γ£ö maps the one-active-card rule (1062) to 409 (14.2513ms)
+  Γ£ö answers 422 for an unknown unit and a bad body (14.9092ms)
+Γ£ö opening cards (30.9441ms)
+Γû╢ logging
+  Γ£ö logs one line per request without bodies or ETags (0.3258ms)
+Γ£ö logging (0.3881ms)
+Γû╢ etag
+  Γ£ö quotes and parses a strong ETag (0.5649ms)
+  Γ£ö answers 428 when the header is missing and 400 when it is unusable (0.2359ms)
+Γ£ö etag (1.5381ms)
+Γû╢ time
+  Γ£ö formats a UTC timestamp the way MySQL writes it in documents (0.8174ms)
+  Γ£ö truncates to whole seconds and never rounds (the DATETIME columns keep no fraction) (0.1205ms)
+Γ£ö time (1.0567ms)
+Γû╢ validateEditBody
+  Γ£ö accepts a valid edit (0.3466ms)
+  Γ£ö refuses unknown properties before the database can (error 6489 never happens) (0.3316ms)
+  Γ£ö refuses bad values with 422 (0.5074ms)
+Γ£ö validateEditBody (1.3944ms)
+Γû╢ validateCloseBody and validateOpenBody
+  Γ£ö accepts PASS and REJECT only (0.2386ms)
+  Γ£ö accepts a unit serial of safe characters only (0.2617ms)
+Γ£ö validateCloseBody and validateOpenBody (0.6689ms)
+Γû╢ applyEdit and applyClose
+  Γ£ö fills who and when on the server and leaves the original untouched (1.8716ms)
+  Γ£ö leaves an entry untouched when it changes nothing, so a repeated request is a no-op (0.222ms)
+  Γ£ö clears who and when when an answer goes back to PENDING (0.1454ms)
+  Γ£ö refuses a result id that is not on the card (0.2894ms)
+  Γ£ö closes with a root-only change (0.198ms)
+Γ£ö applyEdit and applyClose (2.973ms)
+Γû╢ mapDbError
+  Γ£ö maps 6494 (STALE_ETAG) to 412 (0.225ms)
+  Γ£ö maps 50002 (CHECKLIST_INCOMPLETE) to 409 (0.0399ms)
+  Γ£ö maps 50003 (CRITICAL_FINDING_OPEN) to 409 (0.0324ms)
+  Γ£ö maps 50020 (CARD_FINAL) to 409 (0.0313ms)
+  Γ£ö maps 50021 (CARD_FINAL) to 409 (0.0297ms)
+  Γ£ö maps 50022 (CARD_FINAL) to 409 (0.0593ms)
+  Γ£ö maps 1062 (ACTIVE_CARD_EXISTS) to 409 (0.0398ms)
+  Γ£ö maps 1062 (DUPLICATE) to 409 (0.052ms)
+  Γ£ö maps 3819 (RULE_VIOLATED) to 422 (0.0917ms)
+  Γ£ö maps 1452 (REFERENCE_VIOLATED) to 422 (0.0378ms)
+  Γ£ö maps 6489 (UNKNOWN_PROPERTY) to 400 (0.0518ms)
+  Γ£ö maps 6497 (READ_ONLY_WRITE) to 500 (0.0315ms)
+  Γ£ö explains the two close constraints in plain words and names the constraint (0.0976ms)
+  Γ£ö never leaks the text of an unknown error (0.207ms)
+  Γ£ö does not put schema names in the 6489 and 6497 answers (0.1733ms)
+Γ£ö mapDbError (1.4962ms)
+Γä╣ tests 54
+Γä╣ suites 12
+Γä╣ pass 54
+Γä╣ fail 0
+Γä╣ cancelled 0
+Γä╣ skipped 0
+Γä╣ todo 0
+Γä╣ duration_ms 754.6855
