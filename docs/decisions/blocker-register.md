@@ -143,13 +143,15 @@
 
 ## B-018 - Backup set and restore runbook predate D2
 
-- Status: WATCH
+- Status: RESOLVED
 - Date identified: 2026-10-16
-- Impact: The verified backup set (d1-backup-verified) and docs/runbooks/restore-from-backup.md were made before D2. The dump does not contain inspection_card_dv, inspection_card_edit_dv or the three lock triggers, and the rebuild path (Path B) stops at the D1 scripts. A restore from that set loses all D2 work from the database; the scripts in the repository are intact.
-- Control: After D2 closes, create a new backup set and rerun the restore rehearsal (D-017). Add the D2 scripts to the runbook's rebuild path in order: database/02_duality_views 01 to 04 are superseded by later files, so list the final state: 17 (read view), 23 (edit view), then trigger files 05 and 06 as root. Do not publish the submission before this is done.
+- Symptom: The verified backup set (d1-backup-verified) and docs/runbooks/restore-from-backup.md were made before D2. The dump did not contain inspection_card_dv, inspection_card_edit_dv or the lock triggers, and the rebuild path stopped at the D1 scripts.
+- Resolution: A new backup set was taken at commit 44b5712 and proven by a restore rehearsal (D-026). The runbook now has A8, the D2 rehearsal result and Path B2.
+- Limit: Path B2 has not been replayed end to end, and the second copy (B-012) is still open.
+- Verification: docs/evidence/day-2/backup/.
 
 ## Current blocking summary
 
 - Active OPEN blockers: None.
-- Remaining WATCH items: B-007 (MySQL REST Service availability), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path), B-018 (backup set predates D2).
-- Next controlled gate: refresh the backup set and restore runbook for D2 (B-018); Design Pack v4; then the API phase (design agreed before code).
+- Remaining WATCH items: B-007 (MySQL REST Service availability), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path).
+- Next controlled gate: Design Pack v4; then the API phase (design agreed before code).

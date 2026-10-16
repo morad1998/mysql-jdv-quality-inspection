@@ -239,3 +239,13 @@
 - Constraint: Findings and attachment metadata are not locked, so a photo or a resolved finding can be added after a card is final. Direct INSERT or DELETE of result rows is not locked either (the edit view can do neither); a DBA with direct table access can still add a result row to a final card.
 - Constraint: The lock triggers are created by the root account with DEFINER quality_app, as in D-013. File 05 holds the first version of the three triggers; file 06 replaces the two child triggers with a version that ignores unchanged rows (B-017). Replay order: 05, then 06. 98_rollback_final_card_lock.sql drops all three.
 - Verification: docs/evidence/day-2/d2-7c-before-lock.txt (every test L1 to L5 and P3 succeeded: the gap), d2-7c-after-lock.txt (first version: L3 and L5 gave 50021 instead of 50022, and the legitimate close P2 was refused), d2-7c-after-lock-v2.txt (second version: L1 and L2 gave 50020, L3 and L5 gave 50022, L4 gave 50021, P0 gave 50002, P1 and P2 succeeded, P3 gave 50022; baseline and ETags restored).
+
+## D-026 - D2 backup set and restore rehearsal
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: A second backup set, d2-verified-2026-10-16, was taken at Git commit 44b5712 (tag d2-step7-verified) and proven with a restore rehearsal, as D-017 requires. It supersedes the D1 set for everything after D1: the D1 dump has none of the Duality Views or the lock triggers.
+- Constraint: The rehearsal proved a restore from the logical dump. The restored server matched the live one on a fingerprint of row counts, table checksums, trigger order, constraint counts, view metadata and the documents of both D2 views with their ETags, and the lock tests raised the expected errors on the restored copy.
+- Constraint: Not rehearsed: restore with docker compose, granting the jdv_spike rights before loading the dump, restoring a Docker volume snapshot, and Path B2 (a full rebuild from scripts) as an end-to-end replay on a clean container. A clean-environment replay is still owed before submission (plan phases D8 and D10).
+- Constraint: The second copy on different storage (B-012) is still not made for either set. The repository, with its history on GitHub, holds the scripts; only the exact test data state is not stored elsewhere.
+- Verification: docs/evidence/day-2/backup/ and docs/runbooks/restore-from-backup.md (A8, the D2 rehearsal result and Path B2).

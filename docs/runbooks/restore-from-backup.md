@@ -111,7 +111,25 @@ Without this grant, reading a Duality View in jdv_spike fails with ERROR 1356 ("
 - The rules still worked on the restored copy (pending rows created, one-active-card rule, append-only audit).
 - The live database was untouched and the four backup files still matched their hashes.
 
-## Path B: rebuild from the scripts (no dump)
+### A8. Verify the D2 rules in a throwaway container (optional, changes data in a container you remove afterwards)
+
+After A6, run database/02_duality_views/26_final_card_lock_tests.sql as quality_app with the mysql option --force. Do this only in a throwaway container. Expected error lines (the fixed lock, file 06): 50020 at line 27, 50020 at line 36, 50022 at line 45, 50021 at line 54, 50022 at line 63, 50002 at line 75, 50022 at line 99. Lines 81 and 93 (answer everything, close the card) must not raise errors. The test script ends with a FINAL baseline check: cards 1 CLOSED/PASS and 2 REJECTED/REJECT, counts 4, 6, 1, 2 and 0 test cards.
+
+### Result of the D2 rehearsal (2026-10-16)
+
+Backup set d2-verified-2026-10-16, taken at Git commit 44b5712 (tag d2-step7-verified).
+
+- The bundle verified and a clone of it gave HEAD 44b5712, branch main, 126 tracked files and a clean working tree.
+- The dump contained 14 tables, 8 triggers and 4 duality view definitions (2 in each database), the completion marker, and none of the database secrets.
+- The restore into a throwaway container returned exit code 0 with no output. The grant from A6 was applied right after the load and before any query.
+- A fingerprint of 387 lines (row counts, table checksums, triggers with their ACTION_ORDER, constraint counts, view metadata and the JSON documents of inspection_card_dv, inspection_card_edit_dv and customer_orders_dv, including every ETag) was identical on the live and the restored server.
+- The dump contains no FOLLOWS clause, yet the trigger order (trg_inspection_card_bu 1, trg_inspection_card_bu_lock 2) was identical after the restore. Why was not examined.
+- The lock tests (A8) ran against the restored copy and raised the seven expected errors and no others.
+- The live database was untouched, the rehearsal container was removed, and all backup files still matched their hashes.
+
+Still NOT rehearsed: restore with docker compose instead of docker run; granting the jdv_spike rights before loading the dump; restoring a Docker volume snapshot; Path B2 below as an end-to-end replay on a clean container.
+
+## Path B: rebuild from the scripts (no dump) - D1 state only; use Path B2 for the D2 state
 
 Use this when the dump is lost but the repository survives. The final mutated data state will differ from the backup.
 
@@ -123,6 +141,19 @@ Use this when the dump is lost but the repository survives. The final mutated da
 6. As quality_app, run database/01_domain_model/03_seed.sql.
 7. 04_tests.sql is optional. It changes data, so reset first (99_rollback.sql, 01, 02, 03) before running it again.
 
+## Path B2: rebuild the current (D2) state from the scripts (not yet rehearsed)
+
+Use this instead of Path B when the Duality Views and the lock triggers are needed. Path B above covers the D1 state only.
+
+1. Do steps 1 to 6 of Path B (container, jdv_spike and its grant, the Day 0 spike, 01_schema.sql, 02_rules_triggers.sql as root, 03_seed.sql).
+2. As root, run database/01_domain_model/05_final_card_lock_triggers.sql and then 06_final_card_lock_triggers_v2.sql. Order matters: file 05 creates all three lock triggers, and file 06 replaces the two child triggers with a version that ignores updates that change nothing (B-017). Running only 05 leaves the flawed version.
+3. As quality_app, run database/02_duality_views/17_inspection_card_dv_with_attachments.sql (the read view) and 23_inspection_card_edit_dv_with_arrays.sql (the edit view).
+4. Check: INFORMATION_SCHEMA.JSON_DUALITY_VIEWS shows inspection_card_dv (READ_ONLY 1) and inspection_card_edit_dv (ALLOW_UPDATE 1), both valid; INFORMATION_SCHEMA.TRIGGERS shows 8 triggers.
+
+The other files in database/02_duality_views (01 to 16, 20 to 22) are the step-by-step history. Each of 01 to 16 drops and recreates inspection_card_dv, so replaying them is not required. File 20 creates the root-only edit view, which 23 supersedes. 98_rollback_edit_view.sql drops the edit view.
+
+The verification scripts (02, 06, 09, 12, 15, 18, 21, 24) expect the test state with cards 1 and 2. To reproduce that state, run database/01_domain_model/04_tests.sql after step 6 and BEFORE step 2 above (the original order). Running 04_tests.sql after the lock triggers was not tested.
+
 ## Known gotchas
 
 - The dump contains no users or grants. The account quality_app must exist before loading, because triggers and views name it as definer.
@@ -132,3 +163,6 @@ Use this when the dump is lost but the repository survives. The final mutated da
 - Tee-Object and Out-File in Windows PowerShell write UTF-16 by default. Evidence files in the repository are converted to UTF-8 with LF line endings.
 - Never put passwords in documents. Search a dump for the real secret values before sharing it.
 - The copy of SHA256SUMS.txt under docs/evidence/day-1/backup/ records the hashes of the original backup files. The text files stored in the repository were converted to LF line endings, so their hashes differ. Verify against the backup folder, not the repository copies.
+- The lock triggers (D-025) are restored from the dump with DEFINER quality_app, so quality_app must exist before the load, as for the D1 triggers.
+- 25_write_tests_arrays.sql was written before the lock. Against a locked database its tests D4 and D5 raise error 50020 instead of 1062 and success. Use 26_final_card_lock_tests.sql to test a locked database.
+- The second copy of the backup (B-012) has still not been made, for either backup set.
