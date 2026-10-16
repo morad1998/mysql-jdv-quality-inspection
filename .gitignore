@@ -18,6 +18,9 @@ yarn-error.log*
 pnpm-debug.log*
 .npm/
 
+# Python
+__pycache__/
+
 # Build outputs
 dist/
 build/
