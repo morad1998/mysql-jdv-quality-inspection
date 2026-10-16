@@ -1,0 +1,12 @@
++--------------------------------+---------------+--------------------+--------------------+--------------+---------------+
+| TRIGGER_NAME                   | ACTION_TIMING | EVENT_MANIPULATION | EVENT_OBJECT_TABLE | ACTION_ORDER | DEFINER       |
++--------------------------------+---------------+--------------------+--------------------+--------------+---------------+
+| trg_audit_event_bu             | BEFORE        | UPDATE             | audit_event        |            1 | quality_app@% |
+| trg_audit_event_bd             | BEFORE        | DELETE             | audit_event        |            1 | quality_app@% |
+| trg_checklist_result_bu_lock   | BEFORE        | UPDATE             | checklist_result   |            1 | quality_app@% |
+| trg_inspection_card_bi         | BEFORE        | INSERT             | inspection_card    |            1 | quality_app@% |
+| trg_inspection_card_bu         | BEFORE        | UPDATE             | inspection_card    |            1 | quality_app@% |
+| trg_inspection_card_bu_lock    | BEFORE        | UPDATE             | inspection_card    |            2 | quality_app@% |
+| trg_inspection_card_ai         | AFTER         | INSERT             | inspection_card    |            1 | quality_app@% |
+| trg_measurement_result_bu_lock | BEFORE        | UPDATE             | measurement_result |            1 | quality_app@% |
++--------------------------------+---------------+--------------------+--------------------+--------------+---------------+

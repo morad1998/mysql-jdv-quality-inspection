@@ -132,8 +132,24 @@
 - Not separated: in every probe the nested object came before the array in stored key order (unit has 4 characters; measurements has 12), so "the nested object is checked before the arrays" fits the data as well as "the join column is named".
 - Control: Do not use the path in error 6497 to locate an array change when the view contains a nested object. Re-check when write annotations are added, because the message may mislead about which table needs an annotation. An optional probe (an array key shorter than the object key) would separate the two remaining explanations; it is not planned.
 
+## B-017 - First version of the final-card lock blocked a legitimate close
+
+- Status: RESOLVED
+- Date identified: 2026-10-16
+- Symptom: With the first version of the child lock triggers (file 05) closing a finished card through the edit view was refused with ERROR 50021, and a real change to a checklist answer was reported as 50021 (measurement lock) instead of 50022 (checklist lock).
+- Cause: The child triggers refused every UPDATE of a result row of a final card, but a document write updates child rows whose values did not change. After the root became CLOSED, those unchanged child rows hit the lock.
+- Resolution: File 06 replaces the two child triggers with versions that refuse only an UPDATE that changes a column. The root lock trigger already worked this way. The regression tests P1 and P2 caught the flaw before the lock was recorded as working.
+- Verification: docs/evidence/day-2/d2-7c-after-lock.txt (flaw) and d2-7c-after-lock-v2.txt (fixed: P2 succeeds, L3 and L5 give 50022).
+
+## B-018 - Backup set and restore runbook predate D2
+
+- Status: WATCH
+- Date identified: 2026-10-16
+- Impact: The verified backup set (d1-backup-verified) and docs/runbooks/restore-from-backup.md were made before D2. The dump does not contain inspection_card_dv, inspection_card_edit_dv or the three lock triggers, and the rebuild path (Path B) stops at the D1 scripts. A restore from that set loses all D2 work from the database; the scripts in the repository are intact.
+- Control: After D2 closes, create a new backup set and rerun the restore rehearsal (D-017). Add the D2 scripts to the runbook's rebuild path in order: database/02_duality_views 01 to 04 are superseded by later files, so list the final state: 17 (read view), 23 (edit view), then trigger files 05 and 06 as root. Do not publish the submission before this is done.
+
 ## Current blocking summary
 
 - Active OPEN blockers: None.
-- Remaining WATCH items: B-007 (MySQL REST Service availability), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path).
-- Next controlled gate: D2 step 7b: add the measurements and checklist arrays (update only) to inspection_card_edit_dv; atomic-failure, close-in-one-document, reopen and one-active-card tests through documents.
+- Remaining WATCH items: B-007 (MySQL REST Service availability), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path), B-018 (backup set predates D2).
+- Next controlled gate: refresh the backup set and restore runbook for D2 (B-018); Design Pack v4; then the API phase (design agreed before code).
