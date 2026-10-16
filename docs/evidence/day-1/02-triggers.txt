@@ -1,9 +1,0 @@
-+------------------------+---------------+--------------------+--------------------+---------------+
-| TRIGGER_NAME           | ACTION_TIMING | EVENT_MANIPULATION | EVENT_OBJECT_TABLE | DEFINER       |
-+------------------------+---------------+--------------------+--------------------+---------------+
-| trg_audit_event_bu     | BEFORE        | UPDATE             | audit_event        | quality_app@% |
-| trg_audit_event_bd     | BEFORE        | DELETE             | audit_event        | quality_app@% |
-| trg_inspection_card_bi | BEFORE        | INSERT             | inspection_card    | quality_app@% |
-| trg_inspection_card_bu | BEFORE        | UPDATE             | inspection_card    | quality_app@% |
-| trg_inspection_card_ai | AFTER         | INSERT             | inspection_card    | quality_app@% |
-+------------------------+---------------+--------------------+--------------------+---------------+

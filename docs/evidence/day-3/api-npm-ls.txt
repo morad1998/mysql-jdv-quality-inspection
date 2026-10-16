@@ -1,5 +1,0 @@
-mysql-jdv-quality-inspection-api@ D:\morad\mysql-jdv-quality-inspection\api
-+-- @types/node@26.6.5
-+-- mysql2@3.24.6
-`-- typescript@7.0.2
-

@@ -1,8 +1,0 @@
-Backup created (UTC): 2026-10-16 01:24:47
-Git HEAD: ea75f5d2b2d85d5053b4f38a50828e69f9217414
-Git tags: d0-baseline, d1-database-verified
-Git: git version 2.56.0.windows.2
-Docker: Docker version 29.8.2, build 7fc2dff
-Compose: Docker Compose version v5.5.1
-MySQL image: mysql@sha256:c7cb87a9822f499375287930cbff71d6d3b201e346b45108b1115b435ee2df13
-MySQL server version: 9.7.2

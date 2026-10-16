@@ -1,6 +1,0 @@
-﻿docker : ERROR 6489 (HY000) at line 1: Path '$.unsupported_field' is not mapped to any column of `jdv_spike`.`orders`.
-At line:16 char:1
-+ docker exec -i mysql-jdv-quality-db `
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (ERROR 6489 (HY0...pike`.`orders`.:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
