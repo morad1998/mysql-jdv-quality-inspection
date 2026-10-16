@@ -185,3 +185,16 @@
 - Constraint: A real change to a findings element was refused with ERROR 6497 and the data was unchanged. The path in the message followed the B-016 pattern (see B-016).
 - Side effect: the rolled-back insert advanced the quality_finding AUTO_INCREMENT counter; the next automatic finding id is expected to be 3.
 - Verification: docs/evidence/day-2/d2-5-create.txt, d2-5-verify.txt and d2-5-probe-b016.txt; database/02_duality_views/14 to 16.
+
+## D-022 - Attachments array completes the read side of inspection_card_dv
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: D2 step 6 adds the attachment metadata as the fourth nested array ("attachments": attachment_id, finding_id, file_name, mime_type, size_bytes, storage_key, uploaded_by, uploaded_at) at card level. With this step the read-only application view inspection_card_dv has a nested unit object and four independent nested arrays (measurements, checklist, findings, attachments). The read side of D2 is complete. The view stays read-only (no WITH clause).
+- Constraint: All five parts agree with the tables (checks AA1 to AA8). Element counts were 4, 6, 1 and 2, equal to the table row counts. Attachment elements matched 2 of 2.
+- Constraint: A NULL column inside an array element appears as JSON null (attachment 2 has "finding_id": null and matches the table). A card without attachments shows "attachments": null, as for findings. Card 2 has neither findings nor attachments and showed null for both.
+- Constraint: The ETag covers the attachments array. A rolled-back direct insert of an attachment for card 2 changed that array from null to an array of one element and changed the ETag of card 2 (a1d3e9312e549f7dad4fb6c001b2532c became 882e4d34e599239d3e06480459e36302).
+- Constraint: Attachments are grouped at card level and carry finding_id as a plain field. Attachments nested inside each finding were not tested, so a consumer that wants them grouped per finding must group them itself.
+- Constraint: A real change to an attachments element was refused with ERROR 6497, following the B-016 pattern. The data was unchanged afterwards.
+- Implication for D-015 (AI assistant): storage_key is an object location and file_name is user-supplied text. The agent-facing views must leave out storage_key and treat file_name as untrusted text, like the finding description (D-021).
+- Verification: docs/evidence/day-2/d2-6-create.txt, d2-6-verify.txt and d2-6-probe-short-key.txt; database/02_duality_views/17 to 19.

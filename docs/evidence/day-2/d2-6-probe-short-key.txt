@@ -1,0 +1,63 @@
++----------------------------------------------------------------------------------+
+| test_step                                                                        |
++----------------------------------------------------------------------------------+
+| probe_c_dv created; stored key order of the nested unit object (expect sn first) |
++----------------------------------------------------------------------------------+
++------------+-----------------+-----------+--------+
+| TABLE_NAME | ROOT_TABLE_NAME | READ_ONLY | STATUS |
++------------+-----------------+-----------+--------+
+| probe_c_dv | inspection_card | 1         | valid  |
++------------+-----------------+-----------+--------+
++---------------------------+
+| unit_keys_in_stored_order |
++---------------------------+
+| ["sn", "unit_id"]         |
++---------------------------+
++-------------------------------------------+
+| test_step                                 |
++-------------------------------------------+
+| C1 array element result_status (decisive) |
++-------------------------------------------+
+docker : ERROR 6497 (HY000) at line 56: Missing UPDATE tag on `quality_inspection`.`inspection_card`.unit_id, path 
+'$.unit.unit_id'.
+At line:2 char:3
++   docker exec -i mysql-jdv-quality-db sh -c 'MYSQL_PWD="$MYSQL_PASSWO ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR 6497 (HY0....unit.unit_id'.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ERROR 6497 (HY000) at line 61: Missing UPDATE tag on `quality_inspection`.`production_unit`.unit_serial, path 
+'$.unit.sn'.
++-----------------------------------------------------------------------------------+
+| test_step                                                                         |
++-----------------------------------------------------------------------------------+
+| C2 nested object field sn (sanity: expect production_unit.unit_serial, $.unit.sn) |
++-----------------------------------------------------------------------------------+
++---------------------------------------------------------------------------------+
+| test_step                                                                       |
++---------------------------------------------------------------------------------+
+| C3 root field opened_by (sanity: expect inspection_card.opened_by, $.opened_by) |
++---------------------------------------------------------------------------------+
+ERROR 6497 (HY000) at line 66: Missing UPDATE tag on `quality_inspection`.`inspection_card`.opened_by, path 
+'$.opened_by'.
++--------------------------------------------------------------------------------------------------------+
+| test_step                                                                                              |
++--------------------------------------------------------------------------------------------------------+
+| FINAL: probe view gone, data at baseline. EXPECT 0 probe views, opened_by 1 and 2, serial SN-DEMO-0001 |
++--------------------------------------------------------------------------------------------------------+
++------------------+
+| probe_views_left |
++------------------+
+|                0 |
++------------------+
++---------+-----------+
+| card_id | opened_by |
++---------+-----------+
+|       1 |         1 |
+|       2 |         2 |
++---------+-----------+
++--------------+
+| unit_serial  |
++--------------+
+| SN-DEMO-0001 |
++--------------+
