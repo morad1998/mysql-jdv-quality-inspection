@@ -127,3 +127,13 @@
 - Date: 2026-10-16
 - Decision: Offline support covers edits to inspection cards already downloaded to the device. Each queued edit carries the ETag of the document it was based on. If MySQL rejects the replay as stale (error 6494, proven in Day 0 and replayed on 2026-10-16), the user is shown both versions and chooses. Offline card creation and offline attachments are out of scope.
 - Constraint: A retry after a lost response can look like a conflict. The app must re-read the document and compare before reporting one.
+
+## D-017 - Backup set and restore verification standard
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: A backup set consists of a Git bundle, a logical dump of quality_inspection and jdv_spike, baseline row counts, a runtime manifest and SHA256 hashes, stored outside the repository. A backup counts as valid only after a restore rehearsal in a throwaway container with random passwords, compared against the live database, with the live database left untouched.
+- Reason: A backup that has never been restored is only an assumption.
+- Constraint: The dump contains no users or grants. After loading it, the application account needs rights on jdv_spike, because the Duality Views there are defined by quality_app and fail with error 1356 without them (see B-013).
+- Constraint: Dumps are created inside the container and copied out with docker cp, because Windows PowerShell redirection changes the encoding.
+- Verification: docs/evidence/day-1/backup/ and docs/runbooks/restore-from-backup.md.

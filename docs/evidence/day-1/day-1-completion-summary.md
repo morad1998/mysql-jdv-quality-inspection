@@ -4,7 +4,7 @@
 
 PASS for the D1 database part: the relational schema, business-rule triggers, seed data and the positive and expected-failure tests were executed on MySQL 9.7.2 and verified.
 
-D1 is not fully closed. These planned D1 deliverables are still open: inspection-card JSON example, document-boundary decision matrix, read-only and writable behavior matrix, architecture and ER diagrams, and the backup milestone.
+D1 is not fully closed. These planned D1 deliverables are still open: inspection-card JSON example, document-boundary decision matrix, read-only and writable behavior matrix, and architecture and ER diagrams. The backup milestone is complete except for a second copy on different storage (see B-012).
 
 ## Verified runtime
 
@@ -67,6 +67,30 @@ After every expected failure a state check showed the data unchanged. Final row 
 - A pattern search for "ERROR" in the capture finds 17 lines, not 8. The extra lines are test labels containing the text "EXPECT ERROR" and one PowerShell error wrapper line.
 - The schema and trigger creation runs printed no output, so no output file exists for them. Their proof is 01-schema-counts.txt and 02-triggers.txt, which query the resulting objects.
 - Evidence text files were normalized to UTF-8 with LF line endings.
+
+## Backup milestone
+
+PASS for the Git bundle, logical dump, hashes and restore rehearsal. NOT done: a second copy on different storage (B-012).
+
+| Check | Result |
+|---|---|
+| Git bundle verify | Okay, complete history, main and both tags present |
+| Clone from the bundle | HEAD matched the backed-up commit (backup/bundle-clone-check.txt) |
+| Logical dump | Exit code 0, 14 CREATE TABLE, 5 triggers, 2 databases, completion marker present, 0 secret values |
+| Restore into a fresh container | Exit code 0, no output |
+| Live versus restored | Row counts, table checksums, triggers, constraints, open_unit_key and view metadata identical |
+| Documents and ETags | Identical (86 lines each) after the jdv_spike grant |
+| Rules after restore | Pending rows created (3 for the new card), second active card rejected (1062), audit update blocked (50010) |
+| Hashes | All four backup files matched their recorded hashes after the rehearsal |
+
+Backup evidence notes:
+
+- The first rehearsal container failed to start (B-014). The files here are from the second attempt.
+- fingerprint-restored.txt stops at the document query, which failed with error 1356 before the grant was restored (B-013). The documents were compared separately in docs-live.txt and docs-restored.txt.
+- The rule probes changed only the throwaway container, so the restored copy was no longer identical to the live database after them. The container was removed.
+- The restore printed no output, so no output file is included. The exit code 0 is recorded here.
+- The text files in backup/ were converted to LF line endings. SHA256SUMS.txt records the hashes of the original backup files, so verify against the backup folder, not these copies.
+- The runbook is docs/runbooks/restore-from-backup.md.
 
 ## Known limitations
 

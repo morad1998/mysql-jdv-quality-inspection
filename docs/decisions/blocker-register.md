@@ -89,8 +89,31 @@
 - Resolution: Added a safe.directory exception for that one folder only.
 - Verification: git status, git log and git rev-parse HEAD returned the expected Day 0 commit with a clean working tree.
 
+## B-012 - Second backup copy not made
+
+- Status: WATCH
+- Date identified: 2026-10-16
+- Impact: The backup set exists only on one machine. The code and full history are also on the public GitHub repository, and the database content is synthetic and reproducible from the scripts (Path B in the restore runbook), so the data-loss risk is low. The backup validation gate asks for a copy on different storage.
+- Control: Copy the backup folder to a second location chosen by the owner and verify the hashes there. Close this item when done.
+
+## B-013 - Restored Duality Views unreadable until the jdv_spike grant is restored
+
+- Status: RESOLVED
+- Date identified: 2026-10-16
+- Symptom: After restoring the dump into a fresh container, reading customer_orders_dv failed with ERROR 1356 (definer/invoker of view lack rights).
+- Resolution: The dump contains no grants and the views are defined by quality_app. Granted ALL PRIVILEGES on jdv_spike.* to quality_app after the load. The restore runbook now lists this as step A6.
+- Verification: After the grant, document queries returned output identical to the live database, including ETags (86 lines on each side).
+
+## B-014 - First restore rehearsal container failed to start
+
+- Status: RESOLVED
+- Date identified: 2026-10-16
+- Symptom: The throwaway container exited with "Database is uninitialized and password option is not specified".
+- Resolution: A typing error in the password-generation command left the passwords empty. Re-ran with New-Guid, and the rehearsal script now stops if a password is not 32 characters or if the container exits.
+- Verification: The retry started, the restore exit code was 0, and the data compared identical.
+
 ## Current blocking summary
 
 - Active OPEN blockers: None.
-- Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider).
-- Next controlled gate: Create the first read-only inspection_card Duality View (D2) after the verified D1 database baseline is committed.
+- Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider), B-012 (second backup copy).
+- Next controlled gate: Create the first read-only inspection_card Duality View (D2) from the verified D1 baseline.

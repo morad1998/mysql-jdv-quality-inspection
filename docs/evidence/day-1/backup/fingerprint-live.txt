@@ -1,0 +1,146 @@
++----------------+
+| info           |
++----------------+
+| section counts |
++----------------+
++-------------------------------------------+-----------+
+| object_name                               | row_count |
++-------------------------------------------+-----------+
+| quality_inspection.app_user               |         3 |
+| quality_inspection.work_order             |         2 |
+| quality_inspection.production_unit        |         3 |
+| quality_inspection.inspection_section     |         2 |
+| quality_inspection.measurement_definition |         2 |
+| quality_inspection.checklist_definition   |         3 |
+| quality_inspection.inspection_card        |         2 |
+| quality_inspection.measurement_result     |         4 |
+| quality_inspection.checklist_result       |         6 |
+| quality_inspection.quality_finding        |         1 |
+| quality_inspection.attachment_metadata    |         2 |
+| quality_inspection.audit_event            |         1 |
+| jdv_spike.customers                       |         2 |
+| jdv_spike.orders                          |         4 |
++-------------------------------------------+-----------+
++-------------------+
+| info              |
++-------------------+
+| section checksums |
++-------------------+
++-------------------------------------------+------------+
+| Table                                     | Checksum   |
++-------------------------------------------+------------+
+| quality_inspection.app_user               |  253333540 |
+| quality_inspection.work_order             | 2183802028 |
+| quality_inspection.production_unit        | 1902950540 |
+| quality_inspection.inspection_section     | 2818303737 |
+| quality_inspection.measurement_definition | 4091682841 |
+| quality_inspection.checklist_definition   |  421531730 |
+| quality_inspection.inspection_card        | 2235268363 |
+| quality_inspection.measurement_result     | 2502728121 |
+| quality_inspection.checklist_result       | 3239390498 |
+| quality_inspection.quality_finding        | 1662673781 |
+| quality_inspection.attachment_metadata    |  501074193 |
+| quality_inspection.audit_event            | 4080758949 |
+| jdv_spike.customers                       |  156517784 |
+| jdv_spike.orders                          | 4260201094 |
++-------------------------------------------+------------+
++------------------+
+| info             |
++------------------+
+| section triggers |
++------------------+
++------------------------+---------------+--------------------+--------------------+---------------+
+| TRIGGER_NAME           | ACTION_TIMING | EVENT_MANIPULATION | EVENT_OBJECT_TABLE | DEFINER       |
++------------------------+---------------+--------------------+--------------------+---------------+
+| trg_audit_event_bd     | BEFORE        | DELETE             | audit_event        | quality_app@% |
+| trg_audit_event_bu     | BEFORE        | UPDATE             | audit_event        | quality_app@% |
+| trg_inspection_card_ai | AFTER         | INSERT             | inspection_card    | quality_app@% |
+| trg_inspection_card_bi | BEFORE        | INSERT             | inspection_card    | quality_app@% |
+| trg_inspection_card_bu | BEFORE        | UPDATE             | inspection_card    | quality_app@% |
++------------------------+---------------+--------------------+--------------------+---------------+
++---------------------+
+| info                |
++---------------------+
+| section constraints |
++---------------------+
++-----------------+----+
+| CONSTRAINT_TYPE | n  |
++-----------------+----+
+| CHECK           | 17 |
+| FOREIGN KEY     | 18 |
+| PRIMARY KEY     | 12 |
+| UNIQUE          | 11 |
++-----------------+----+
++-----------------------+
+| info                  |
++-----------------------+
+| section open_unit_key |
++-----------------------+
++---------------+-------------------+
+| COLUMN_NAME   | EXTRA             |
++---------------+-------------------+
+| open_unit_key | VIRTUAL GENERATED |
++---------------+-------------------+
++-----------------------------+------------+
+| INDEX_NAME                  | NON_UNIQUE |
++-----------------------------+------------+
+| uq_card_one_active_per_unit |          0 |
++-----------------------------+------------+
++-----------------------+
+| info                  |
++-----------------------+
+| section duality views |
++-----------------------+
++--------------------+------------------+-----------------+--------------+--------------+--------------+-----------+--------+
+| TABLE_NAME         | JSON_COLUMN_NAME | ROOT_TABLE_NAME | ALLOW_INSERT | ALLOW_UPDATE | ALLOW_DELETE | READ_ONLY | STATUS |
++--------------------+------------------+-----------------+--------------+--------------+--------------+-----------+--------+
+| customer_orders_dv | data             | customers       | 0            | 0            | 0            | 1         | valid  |
+| order_dv           | data             | orders          | 1            | 1            | 1            | 0         | valid  |
++--------------------+------------------+-----------------+--------------+--------------+--------------+-----------+--------+
++-------------------+
+| info              |
++-------------------+
+| section documents |
++-------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| doc                                                                                                                                                                                                                                                                                                               |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| {
+  "_id": 1,
+  "orders": [
+    {
+      "amount": 10.00,
+      "product": "Milk",
+      "order_id": 1
+    },
+    {
+      "amount": 5.00,
+      "product": "Curd",
+      "order_id": 2
+    }
+  ],
+  "_metadata": {
+    "etag": "a6f0e76602398bc2df6fdd09494ae07b"
+  },
+  "customer_name": "Alice"
+}                |
+| {
+  "_id": 2,
+  "orders": [
+    {
+      "amount": 20.00,
+      "product": "Whole Wheat Flour",
+      "order_id": 3
+    },
+    {
+      "amount": 5.00,
+      "product": "Biscuits",
+      "order_id": 4
+    }
+  ],
+  "_metadata": {
+    "etag": "da4d8301089c0f3ac2b15c7b245cd7dc"
+  },
+  "customer_name": "Bob"
+} |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
