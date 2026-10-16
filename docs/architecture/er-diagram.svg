@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1740" height="1150" viewBox="0 0 1740 1150" font-family="DejaVu Sans, Arial, sans-serif">
+<rect width="1740" height="1150" fill="#ffffff"/>
+<path d="M220,170 L220,230" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="168" y="183" width="17" height="16" fill="#fff"/>
+<text x="176" y="195" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<rect x="196" y="210" width="17" height="16" fill="#fff"/>
+<text x="204" y="222" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<path d="M350,290 L430,290" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="354" y="270" width="17" height="16" fill="#fff"/>
+<text x="362" y="282" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<rect x="410" y="270" width="17" height="16" fill="#fff"/>
+<text x="418" y="282" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<path d="M350,490 L390,490 L390,400 L430,400" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="354" y="472" width="17" height="16" fill="#fff"/>
+<text x="362" y="484" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<rect x="410" y="382" width="17" height="16" fill="#fff"/>
+<text x="418" y="394" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<text x="384" y="388" font-size="11" text-anchor="end" fill="#404040" font-weight="normal">opened_by, closed_by</text>
+<path d="M750,340 L815,340" fill="none" stroke="#404040" stroke-width="1.6"/>
+<path d="M815,90 L815,780" fill="none" stroke="#404040" stroke-width="1.6"/>
+<path d="M815,90 L880,90" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="858" y="74" width="17" height="16" fill="#fff"/>
+<text x="866" y="86" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<path d="M815,320 L880,320" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="858" y="304" width="17" height="16" fill="#fff"/>
+<text x="866" y="316" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<path d="M815,530 L880,530" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="858" y="514" width="17" height="16" fill="#fff"/>
+<text x="866" y="526" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<path d="M815,780 L880,780" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="858" y="764" width="17" height="16" fill="#fff"/>
+<text x="866" y="776" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<rect x="756" y="324" width="17" height="16" fill="#fff"/>
+<text x="764" y="336" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<path d="M1040,670 L1040,720" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="1005" y="676" width="38" height="16" fill="#fff"/>
+<text x="1024" y="688" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">0..1</text>
+<rect x="1046" y="702" width="17" height="16" fill="#fff"/>
+<text x="1054" y="714" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<text x="1056" y="700" font-size="11" text-anchor="start" fill="#404040" font-weight="normal" font-style="italic">composite FK (finding_id, card_id)</text>
+<path d="M1330,250 L1265,250 L1265,90 L1200,90" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="1206" y="74" width="17" height="16" fill="#fff"/>
+<text x="1214" y="86" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<rect x="1308" y="234" width="17" height="16" fill="#fff"/>
+<text x="1316" y="246" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<path d="M1330,480 L1265,480 L1265,320 L1200,320" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="1206" y="304" width="17" height="16" fill="#fff"/>
+<text x="1214" y="316" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<rect x="1308" y="464" width="17" height="16" fill="#fff"/>
+<text x="1316" y="476" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<path d="M1490,150 L1490,190" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="1468" y="156" width="17" height="16" fill="#fff"/>
+<text x="1476" y="168" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<rect x="1496" y="172" width="17" height="16" fill="#fff"/>
+<text x="1504" y="184" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<path d="M1650,90 L1695,90 L1695,480 L1650,480" fill="none" stroke="#404040" stroke-width="1.6"/>
+<rect x="1656" y="74" width="17" height="16" fill="#fff"/>
+<text x="1664" y="86" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">1</text>
+<rect x="1656" y="464" width="17" height="16" fill="#fff"/>
+<text x="1664" y="476" font-size="12" text-anchor="middle" fill="#c00000" font-weight="bold">N</text>
+<path d="M350,740 L700,740" fill="none" stroke="#c55a11" stroke-width="1.6" stroke-dasharray="6,4"/>
+<text x="362" y="758" font-size="11" text-anchor="start" fill="#c55a11" font-weight="normal" font-style="italic">target_type + target_id: a logical reference to any table, no FK</text>
+<rect x="30" y="430" width="320" height="140" fill="#ffffff" stroke="#595959" stroke-width="2"/>
+<rect x="30" y="430" width="320" height="30" fill="#595959"/>
+<text x="40" y="450" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">app_user</text>
+<text x="40" y="475" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">user_id</text>
+<text x="340" y="475" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="40" y="495" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">username</text>
+<text x="340" y="495" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK</text>
+<text x="40" y="515" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">display_name</text>
+<text x="40" y="535" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">role_code</text>
+<text x="40" y="555" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">is_active</text>
+<rect x="30" y="30" width="320" height="140" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<rect x="30" y="30" width="320" height="30" fill="#1f3864"/>
+<text x="40" y="50" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">work_order</text>
+<text x="40" y="75" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">work_order_id</text>
+<text x="340" y="75" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="40" y="95" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">work_order_number</text>
+<text x="340" y="95" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK</text>
+<text x="40" y="115" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">product_model</text>
+<text x="40" y="135" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">planned_quantity</text>
+<text x="40" y="155" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">created_at</text>
+<rect x="30" y="230" width="320" height="120" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<rect x="30" y="230" width="320" height="30" fill="#1f3864"/>
+<text x="40" y="250" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">production_unit</text>
+<text x="40" y="275" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">unit_id</text>
+<text x="340" y="275" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="40" y="295" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">work_order_id</text>
+<text x="340" y="295" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="40" y="315" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">unit_serial</text>
+<text x="340" y="315" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK</text>
+<text x="40" y="335" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">created_at</text>
+<rect x="1330" y="30" width="320" height="120" fill="#ffffff" stroke="#2e75b6" stroke-width="2"/>
+<rect x="1330" y="30" width="320" height="30" fill="#2e75b6"/>
+<text x="1340" y="50" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">inspection_section</text>
+<text x="1340" y="75" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">section_id</text>
+<text x="1640" y="75" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="1340" y="95" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">section_code</text>
+<text x="1640" y="95" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK</text>
+<text x="1340" y="115" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">section_name</text>
+<text x="1340" y="135" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">sort_order</text>
+<rect x="1330" y="190" width="320" height="180" fill="#ffffff" stroke="#2e75b6" stroke-width="2"/>
+<rect x="1330" y="190" width="320" height="30" fill="#2e75b6"/>
+<text x="1340" y="210" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">measurement_definition</text>
+<text x="1340" y="235" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">measurement_definition_id</text>
+<text x="1640" y="235" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="1340" y="255" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">section_id</text>
+<text x="1640" y="255" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK UK*</text>
+<text x="1340" y="275" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">checkpoint_code</text>
+<text x="1640" y="275" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK*</text>
+<text x="1340" y="295" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">description</text>
+<text x="1340" y="315" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">unit_of_measure</text>
+<text x="1340" y="335" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">min_value</text>
+<text x="1340" y="355" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">max_value</text>
+<rect x="1330" y="420" width="320" height="120" fill="#ffffff" stroke="#2e75b6" stroke-width="2"/>
+<rect x="1330" y="420" width="320" height="30" fill="#2e75b6"/>
+<text x="1340" y="440" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">checklist_definition</text>
+<text x="1340" y="465" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">checklist_definition_id</text>
+<text x="1640" y="465" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="1340" y="485" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">section_id</text>
+<text x="1640" y="485" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK UK*</text>
+<text x="1340" y="505" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">checkpoint_code</text>
+<text x="1640" y="505" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK*</text>
+<text x="1340" y="525" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">description</text>
+<rect x="430" y="230" width="320" height="220" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<rect x="430" y="230" width="320" height="30" fill="#1f3864"/>
+<text x="440" y="250" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">inspection_card</text>
+<text x="440" y="275" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">card_id</text>
+<text x="740" y="275" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="440" y="295" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">unit_id</text>
+<text x="740" y="295" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="440" y="315" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">card_status</text>
+<text x="440" y="335" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">disposition</text>
+<text x="440" y="355" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">opened_by</text>
+<text x="740" y="355" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="440" y="375" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">opened_at</text>
+<text x="440" y="395" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">closed_by</text>
+<text x="740" y="395" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="440" y="415" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">closed_at</text>
+<text x="440" y="435" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">open_unit_key</text>
+<text x="740" y="435" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK gen</text>
+<rect x="880" y="30" width="320" height="180" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<rect x="880" y="30" width="320" height="30" fill="#1f3864"/>
+<text x="890" y="50" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">measurement_result</text>
+<text x="890" y="75" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">measurement_result_id</text>
+<text x="1190" y="75" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="890" y="95" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">card_id</text>
+<text x="1190" y="95" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK UK*</text>
+<text x="890" y="115" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">measurement_definition_id</text>
+<text x="1190" y="115" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK UK*</text>
+<text x="890" y="135" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">result_status</text>
+<text x="890" y="155" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">measured_value</text>
+<text x="890" y="175" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">recorded_by</text>
+<text x="1190" y="175" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="890" y="195" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">recorded_at</text>
+<rect x="880" y="260" width="320" height="160" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<rect x="880" y="260" width="320" height="30" fill="#1f3864"/>
+<text x="890" y="280" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">checklist_result</text>
+<text x="890" y="305" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">checklist_result_id</text>
+<text x="1190" y="305" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="890" y="325" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">card_id</text>
+<text x="1190" y="325" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK UK*</text>
+<text x="890" y="345" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">checklist_definition_id</text>
+<text x="1190" y="345" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK UK*</text>
+<text x="890" y="365" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">answer_code</text>
+<text x="890" y="385" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">answered_by</text>
+<text x="1190" y="385" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="890" y="405" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">answered_at</text>
+<rect x="880" y="470" width="320" height="200" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<rect x="880" y="470" width="320" height="30" fill="#1f3864"/>
+<text x="890" y="490" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">quality_finding</text>
+<text x="890" y="515" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">finding_id</text>
+<text x="1190" y="515" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK UK*</text>
+<text x="890" y="535" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">card_id</text>
+<text x="1190" y="535" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK UK*</text>
+<text x="890" y="555" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">severity</text>
+<text x="890" y="575" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">finding_status</text>
+<text x="890" y="595" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">description</text>
+<text x="890" y="615" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">raised_by</text>
+<text x="1190" y="615" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="890" y="635" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">raised_at</text>
+<text x="890" y="655" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">resolved_at</text>
+<rect x="880" y="720" width="320" height="220" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<rect x="880" y="720" width="320" height="30" fill="#1f3864"/>
+<text x="890" y="740" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">attachment_metadata</text>
+<text x="890" y="765" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">attachment_id</text>
+<text x="1190" y="765" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="890" y="785" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">card_id</text>
+<text x="1190" y="785" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="890" y="805" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">finding_id</text>
+<text x="1190" y="805" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK (composite)</text>
+<text x="890" y="825" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">file_name</text>
+<text x="890" y="845" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">mime_type</text>
+<text x="890" y="865" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">size_bytes</text>
+<text x="890" y="885" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">storage_key</text>
+<text x="1190" y="885" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">UK</text>
+<text x="890" y="905" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">uploaded_by</text>
+<text x="1190" y="905" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="890" y="925" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">uploaded_at</text>
+<rect x="30" y="640" width="320" height="180" fill="#ffffff" stroke="#c55a11" stroke-width="2"/>
+<rect x="30" y="640" width="320" height="30" fill="#c55a11"/>
+<text x="40" y="660" font-size="15" text-anchor="start" fill="#ffffff" font-weight="bold">audit_event</text>
+<text x="40" y="685" font-size="12" text-anchor="start" fill="#000000" font-weight="bold">audit_event_id</text>
+<text x="340" y="685" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">PK</text>
+<text x="40" y="705" font-size="12" text-anchor="start" fill="#000000" font-weight="normal" font-style="italic">actor_id</text>
+<text x="340" y="705" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">FK</text>
+<text x="40" y="725" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">event_type</text>
+<text x="40" y="745" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">event_time</text>
+<text x="40" y="765" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">target_type</text>
+<text x="40" y="785" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">target_id</text>
+<text x="340" y="785" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">no FK</text>
+<text x="40" y="805" font-size="12" text-anchor="start" fill="#000000" font-weight="normal">details</text>
+<text x="340" y="805" font-size="11" text-anchor="end" fill="#595959" font-weight="normal">JSON</text>
+<text x="430" y="18" font-size="16" text-anchor="start" fill="#1f3864" font-weight="bold">Entity-relationship diagram: 12 tables (MySQL 9.7.2, database quality_inspection)</text>
+<rect x="430" y="985" width="1260" height="130" fill="#f7f7f7" stroke="#bfbfbf"/>
+<text x="445" y="1009" font-size="12" text-anchor="start" fill="#000" font-weight="bold">Keys:</text>
+<text x="545" y="1009" font-size="12" text-anchor="start" fill="#262626" font-weight="normal">PK primary key, FK foreign key, UK unique, UK* part of a composite unique key, gen virtual generated column (one-active-card rule: unit_id while OPEN or IN_PROGRESS, else NULL).</text>
+<text x="445" y="1031" font-size="12" text-anchor="start" fill="#000" font-weight="bold">Cardinality:</text>
+<text x="545" y="1031" font-size="12" text-anchor="start" fill="#262626" font-weight="normal">1 exactly one, N zero or many, 0..1 optional. Every foreign key shown is enforced by the database.</text>
+<text x="445" y="1053" font-size="12" text-anchor="start" fill="#000" font-weight="bold">Omitted lines:</text>
+<text x="545" y="1053" font-size="12" text-anchor="start" fill="#262626" font-weight="normal">recorded_by, answered_by, raised_by, uploaded_by and audit_event.actor_id also reference app_user (lines left out for readability).</text>
+<text x="445" y="1075" font-size="12" text-anchor="start" fill="#000" font-weight="bold">Colors:</text>
+<text x="545" y="1075" font-size="12" text-anchor="start" fill="#262626" font-weight="normal">dark blue = transaction tables, light blue = reference data (not versioned), grey = demo users, orange = append-only audit.</text>
+<text x="445" y="1097" font-size="12" text-anchor="start" fill="#000" font-weight="bold">Source:</text>
+<text x="545" y="1097" font-size="12" text-anchor="start" fill="#262626" font-weight="normal">database/01_domain_model/01_schema.sql. Column types, CHECK constraints and triggers are in that file and in docs/decisions/decision-log.md (D-009, D-012, D-013, D-025).</text>
+</svg>

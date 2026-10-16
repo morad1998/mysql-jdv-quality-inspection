@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="860" viewBox="0 0 1720 860" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#404040"/></marker><marker id="arrs" markerWidth="10" markerHeight="8" refX="1" refY="4" orient="auto-start-reverse"><path d="M0,0 L10,4 L0,8 z" fill="#404040"/></marker></defs>
+<rect width="1720" height="860" fill="#ffffff"/>
+<text x="30" y="30" font-size="17" text-anchor="start" fill="#1f3864" font-weight="bold">Runtime architecture: one database that owns the data and the rules, and a thin API</text>
+<rect x="30" y="80" width="300" height="360" rx="6" fill="#fbfbfb" stroke="#595959" stroke-width="2"/>
+<rect x="30" y="80" width="300" height="32" rx="6" fill="#595959"/>
+<text x="42" y="102" font-size="15" text-anchor="start" fill="#fff" font-weight="bold">Clients</text>
+<text x="45" y="140" font-size="13" text-anchor="start" fill="#000" font-weight="normal">curl, PowerShell,</text>
+<text x="45" y="158" font-size="13" text-anchor="start" fill="#000" font-weight="normal">the example script</text>
+<text x="45" y="190" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">They send JSON over HTTP</text>
+<text x="45" y="208" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">with X-Demo-User, and for</text>
+<text x="45" y="226" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">writes an If-Match ETag.</text>
+<text x="45" y="262" font-size="12" text-anchor="start" fill="#000" font-weight="bold">Recorded requests:</text>
+<text x="45" y="280" font-size="12" text-anchor="start" fill="#000" font-weight="normal">docs/api/example-transcript.md</text>
+<rect x="45" y="310" width="270" height="54" rx="6" fill="#f2f2f2" stroke="#a6a6a6" stroke-width="1.5" stroke-dasharray="7,5"/>
+<text x="55" y="332" font-size="12" text-anchor="start" fill="#595959" font-weight="normal">Not built: tablet or web app</text>
+<text x="55" y="350" font-size="12" text-anchor="start" fill="#595959" font-weight="normal" font-style="italic">(React PWA, offline edits)</text>
+<rect x="45" y="376" width="270" height="54" rx="6" fill="#f2f2f2" stroke="#a6a6a6" stroke-width="1.5" stroke-dasharray="7,5"/>
+<text x="55" y="398" font-size="12" text-anchor="start" fill="#595959" font-weight="normal">Not built: AI assistant</text>
+<text x="55" y="416" font-size="12" text-anchor="start" fill="#595959" font-weight="normal" font-style="italic">(read-only agent views)</text>
+<rect x="420" y="80" width="420" height="580" rx="6" fill="#fbfbfb" stroke="#1f3864" stroke-width="2"/>
+<rect x="420" y="80" width="420" height="32" rx="6" fill="#1f3864"/>
+<text x="432" y="102" font-size="15" text-anchor="start" fill="#fff" font-weight="bold">Demo API  (Node.js 24, TypeScript)  api/src</text>
+<rect x="435" y="128" width="390" height="72" rx="6" fill="#ffffff" stroke="#8497b0" stroke-width="1.5"/>
+<text x="447" y="150" font-size="13" text-anchor="start" fill="#1f3864" font-weight="bold">Demo authentication</text>
+<text x="447" y="170" font-size="12" text-anchor="start" fill="#000" font-weight="normal">X-Demo-User selects a seeded app_user;</text>
+<text x="447" y="186" font-size="12" text-anchor="start" fill="#000" font-weight="normal">INSPECTOR writes, SUPERVISOR closes (D-010)</text>
+<rect x="435" y="213" width="390" height="72" rx="6" fill="#ffffff" stroke="#8497b0" stroke-width="1.5"/>
+<text x="447" y="235" font-size="13" text-anchor="start" fill="#1f3864" font-weight="bold">Validation</text>
+<text x="447" y="255" font-size="12" text-anchor="start" fill="#000" font-weight="normal">Every body checked; unknown properties are</text>
+<text x="447" y="271" font-size="12" text-anchor="start" fill="#000" font-weight="normal">refused here, so MySQL error 6489 never occurs</text>
+<rect x="435" y="298" width="390" height="72" rx="6" fill="#ffffff" stroke="#8497b0" stroke-width="1.5"/>
+<text x="447" y="320" font-size="13" text-anchor="start" fill="#1f3864" font-weight="bold">ETag handling</text>
+<text x="447" y="340" font-size="12" text-anchor="start" fill="#000" font-weight="normal">If-Match required on writes; a stale ETag</text>
+<text x="447" y="356" font-size="12" text-anchor="start" fill="#000" font-weight="normal">returns 412 with the current document</text>
+<rect x="435" y="383" width="390" height="72" rx="6" fill="#ffffff" stroke="#8497b0" stroke-width="1.5"/>
+<text x="447" y="405" font-size="13" text-anchor="start" fill="#1f3864" font-weight="bold">Edit logic</text>
+<text x="447" y="425" font-size="12" text-anchor="start" fill="#000" font-weight="normal">Fills who and when (UTC, whole seconds);</text>
+<text x="447" y="441" font-size="12" text-anchor="start" fill="#000" font-weight="normal">a repeated close is refused here (D-028)</text>
+<rect x="435" y="468" width="390" height="72" rx="6" fill="#ffffff" stroke="#8497b0" stroke-width="1.5"/>
+<text x="447" y="490" font-size="13" text-anchor="start" fill="#1f3864" font-weight="bold">Error mapping</text>
+<text x="447" y="510" font-size="12" text-anchor="start" fill="#000" font-weight="normal">Database error NUMBER becomes an HTTP</text>
+<text x="447" y="526" font-size="12" text-anchor="start" fill="#000" font-weight="normal">status: 409, 412, 422 and others (error text not forwarded)</text>
+<rect x="435" y="553" width="390" height="72" rx="6" fill="#ffffff" stroke="#8497b0" stroke-width="1.5"/>
+<text x="447" y="575" font-size="13" text-anchor="start" fill="#1f3864" font-weight="bold">Database access</text>
+<text x="447" y="595" font-size="12" text-anchor="start" fill="#000" font-weight="normal">mysql2, text protocol; only db.ts talks</text>
+<text x="447" y="611" font-size="12" text-anchor="start" fill="#000" font-weight="normal">to MySQL; the same way the D2 scripts ran</text>
+<rect x="950" y="40" width="740" height="740" rx="6" fill="#fbfbfb" stroke="#2e75b6" stroke-width="2"/>
+<rect x="950" y="40" width="740" height="32" rx="6" fill="#2e75b6"/>
+<text x="962" y="62" font-size="15" text-anchor="start" fill="#fff" font-weight="bold">MySQL 9.7.2 Community  (Docker container, 127.0.0.1:3307)</text>
+<rect x="980" y="90" width="680" height="130" rx="6" fill="#eaf1fa" stroke="#2e75b6" stroke-width="2"/>
+<text x="995" y="114" font-size="14" text-anchor="start" fill="#1f3864" font-weight="bold">inspection_card_dv</text>
+<text x="1160" y="114" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">read-only Duality View: serves the card for display</text>
+<text x="995" y="140" font-size="12" text-anchor="start" fill="#000" font-weight="normal">root: status, disposition, opened_by, opened_at, closed_by, closed_at</text>
+<text x="995" y="160" font-size="12" text-anchor="start" fill="#000" font-weight="normal">unit (nested object); arrays: measurements, checklist, findings, attachments</text>
+<text x="995" y="190" font-size="12" text-anchor="start" fill="#c00000" font-weight="normal" font-style="italic">A real change here is refused (ERROR 6497, missing UPDATE tag); a no-op is accepted.</text>
+<rect x="980" y="245" width="680" height="130" rx="6" fill="#eaf1fa" stroke="#2e75b6" stroke-width="2"/>
+<text x="995" y="269" font-size="14" text-anchor="start" fill="#1f3864" font-weight="bold">inspection_card_edit_dv</text>
+<text x="1210" y="269" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">update-enabled view: WITH (UPDATE), no INSERT or DELETE</text>
+<text x="995" y="295" font-size="12" text-anchor="start" fill="#000" font-weight="normal">root: card_status, disposition, closed_by, closed_at</text>
+<text x="995" y="315" font-size="12" text-anchor="start" fill="#000" font-weight="normal">arrays: measurements, checklist. Not projected: unit_id, opened_by, definition ids.</text>
+<text x="995" y="345" font-size="12" text-anchor="start" fill="#404040" font-weight="normal" font-style="italic">A write is one atomic operation: root first, then child rows; ETag checked (error 6494).</text>
+<rect x="980" y="420" width="680" height="150" rx="6" fill="#ffffff" stroke="#1f3864" stroke-width="2"/>
+<text x="995" y="444" font-size="14" text-anchor="start" fill="#1f3864" font-weight="bold">Base tables: the system of record (12 tables, database quality_inspection)</text>
+<text x="995" y="472" font-size="12" text-anchor="start" fill="#000" font-weight="normal">Transaction tables: work_order, production_unit, inspection_card,</text>
+<text x="995" y="490" font-size="12" text-anchor="start" fill="#000" font-weight="normal">measurement_result, checklist_result, quality_finding, attachment_metadata, audit_event</text>
+<text x="995" y="518" font-size="12" text-anchor="start" fill="#000" font-weight="normal">Reference data: app_user, inspection_section, measurement_definition, checklist_definition</text>
+<text x="995" y="548" font-size="12" text-anchor="start" fill="#404040" font-weight="normal" font-style="italic">See er-diagram.svg for keys and relationships.</text>
+<rect x="980" y="610" width="680" height="120" rx="6" fill="#fff4ec" stroke="#c55a11" stroke-width="2"/>
+<text x="995" y="634" font-size="14" text-anchor="start" fill="#c55a11" font-weight="bold">Rules that apply to every write, whichever door it comes through</text>
+<text x="995" y="660" font-size="12" text-anchor="start" fill="#000" font-weight="normal">8 triggers: close rules (50002, 50003), final-card lock (50020 to 50022), pending rows, audit</text>
+<text x="995" y="678" font-size="12" text-anchor="start" fill="#000" font-weight="normal">17 CHECK constraints (3819), 18 foreign keys (1452), one active card per unit (1062)</text>
+<text x="995" y="700" font-size="12" text-anchor="start" fill="#404040" font-weight="normal" font-style="italic">The API maps these errors to HTTP; it does not repeat the rules (the one exception: D-028).</text>
+<text x="1005" y="757" font-size="11" text-anchor="start" fill="#7f7f7f" font-weight="normal" font-style="italic">Day 0 proof (jdv_spike database): customer_orders_dv and order_dv, unchanged.</text>
+<path d="M330,250 L420,250" fill="none" stroke="#404040" stroke-width="1.8" marker-end="url(#arr)" marker-start="url(#arrs)"/>
+<text x="375" y="236" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">HTTP</text>
+<text x="375" y="270" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">JSON</text>
+<path d="M840,150 L980,150" fill="none" stroke="#404040" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="910" y="140" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">SELECT</text>
+<text x="910" y="168" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">document</text>
+<path d="M840,300 L980,300" fill="none" stroke="#404040" stroke-width="1.8" marker-end="url(#arr)" marker-start="url(#arrs)"/>
+<text x="910" y="286" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">SELECT /</text>
+<text x="910" y="322" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">UPDATE document</text>
+<path d="M840,480 L980,480" fill="none" stroke="#404040" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="910" y="466" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">INSERT card</text>
+<text x="910" y="500" font-size="11" text-anchor="middle" fill="#404040" font-weight="normal">(plain SQL)</text>
+<path d="M1640,440 L1675,440 L1675,160 L1660,160" fill="none" stroke="#2e75b6" stroke-width="1.8" marker-end="url(#arr)"/>
+<path d="M1500,420 L1500,375" fill="none" stroke="#2e75b6" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="1490" y="403" font-size="11" text-anchor="end" fill="#2e75b6" font-weight="normal" font-style="italic">the views read and write the tables</text>
+<path d="M1310,610 L1310,570" fill="none" stroke="#c55a11" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="1320" y="595" font-size="11" text-anchor="start" fill="#c55a11" font-weight="normal" font-style="italic">guard the tables</text>
+<text x="30" y="700" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">Dashed grey boxes are planned but not built. Everything else is built and tested:</text>
+<text x="30" y="718" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">database scripts and evidence: docs/evidence/day-1 and day-2; API and its tests: docs/evidence/day-3.</text>
+<text x="30" y="746" font-size="12" text-anchor="start" fill="#404040" font-weight="normal">Decisions: D-018 to D-028 in docs/decisions/decision-log.md.</text>
+</svg>
