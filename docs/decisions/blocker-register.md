@@ -59,8 +59,38 @@
 - Impact: REST integration remains a bonus feature and its availability in the selected environment has not been validated.
 - Control: Use a transparent Node.js and TypeScript REST adapter if MySQL REST Service is unavailable.
 
+## B-008 - Generated column compatibility with Duality Views
+
+- Status: WATCH
+- Date identified: 2026-10-16
+- Impact: inspection_card contains the virtual generated column open_unit_key (D-012). It has not been tested with a JSON Duality View over inspection_card.
+- Control: Re-check when the first inspection_card view is created in D2. If MySQL rejects the table or column, enforce the one-active-card rule with a trigger instead and record the limitation.
+
+## B-009 - AI model provider not selected
+
+- Status: WATCH
+- Date identified: 2026-10-16
+- Impact: The AI assistant (D-015) will call a hosted model with the owner's own API key, but the specific provider has not been chosen. This does not block D1 or D2.
+- Control: Choose the provider before the AI phase. Use one adapter so the provider can be swapped. AI_PROVIDER stays disabled until the read-only controls are tested.
+
+## B-010 - Test output order in Windows PowerShell capture
+
+- Status: RESOLVED
+- Date identified: 2026-10-16
+- Symptom: In the captured D1 test output, ERROR lines appear out of order relative to the test labels, and a pattern search for "ERROR" counted 17 lines instead of 8.
+- Resolution: Each test prints a label and a post-failure state check, so results are read by error number and state check, not by line order. The extra count came from test labels that contain the text "EXPECT ERROR" and one PowerShell error wrapper line.
+- Verification: All eight expected errors are present by number (1062, 50001, 50002, 50003, 3819, 1452, 50010, 50011) and the data was unchanged after each.
+
+## B-011 - Git dubious ownership on a copied repository
+
+- Status: RESOLVED
+- Date identified: 2026-10-16
+- Symptom: Git refused to run in the repository copied from another machine ("detected dubious ownership").
+- Resolution: Added a safe.directory exception for that one folder only.
+- Verification: git status, git log and git rev-parse HEAD returned the expected Day 0 commit with a clean working tree.
+
 ## Current blocking summary
 
 - Active OPEN blockers: None.
-- Remaining WATCH item: MySQL REST Service availability.
-- Next controlled gate: Review and commit the verified Day 0 baseline.
+- Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider).
+- Next controlled gate: Create the first read-only inspection_card Duality View (D2) after the verified D1 database baseline is committed.
