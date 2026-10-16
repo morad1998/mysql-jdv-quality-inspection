@@ -147,3 +147,17 @@
 - Constraint: SQL NULL appears in a document as JSON null.
 - Constraint: A no-change update through a read-only view (setting a field to the value it already has) is accepted silently. A real change is refused with error 6497 (Missing UPDATE tag on the column and path).
 - Verification: docs/evidence/day-2/ (V1 to V5, F1 to F5) and database/02_duality_views/.
+
+## D-019 - Nested unit object and measurements array in inspection_card_dv
+
+- Status: Approved
+- Date: 2026-10-16
+- Decision: Extend the read-only inspection_card_dv in steps. Step 2 adds the production unit as a nested object ("unit": unit_id, unit_serial, work_order_id). Step 3 adds the measurement results as a nested array ("measurements") that carries the measurement_result columns only. unit_id moved from the document root into the nested unit object. The definition (description, unit of measure) is not yet part of the array elements. The view stays read-only (no WITH clause).
+- Constraint: The nested single-object pattern and the JSON_ARRAYAGG array pattern both work in a read-only view and agree with the tables (checks W1 to W6 and X1 to X8).
+- Constraint: A card that has no measurement_result rows is shown as "measurements": null (JSON null), not as an empty array. The API layer and every client must treat null as empty.
+- Constraint: The ETag covers nested data. It changed when only the nested unit row changed, and when only one measurement row changed, while the card row itself was untouched.
+- Constraint: The ETag also depends on the view definition. The same card with the same data had three different ETags in D2 steps 1, 2 and 3 as the document grew. An ETag is comparable only within one view definition.
+- Implication for D-016 (offline): a cached ETag is valid only for the view version it came from. The offline cache must treat the document shape as a versioned contract and discard cached ETags and documents when the contract changes. A queued edit that conflicts because a nested row changed is a correct conflict, and the conflict screen must say which part changed.
+- Constraint: DECIMAL values keep their scale inside a document (1000.250). JSON keys come back in MySQL's normalized order (shorter keys first, then alphabetical), not the order written in the view. Array elements came back in primary-key order in every test, but nothing in the view guarantees that order, so add an explicit order if a client depends on it.
+- Constraint: Primary key values are not contiguous (measurement_result ids 1, 2, 4, 5, then 10 and 11). This is consistent with InnoDB allocating ids in batches for the INSERT ... SELECT inside the card trigger, but that cause is not proven. Clients must not assume contiguous ids.
+- Verification: docs/evidence/day-2/d2-2-*.txt and d2-3-*.txt; database/02_duality_views/05 to 10.

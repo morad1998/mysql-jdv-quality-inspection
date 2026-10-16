@@ -120,8 +120,15 @@
 - Resolution: Added a test that makes a real change inside a transaction that is rolled back. MySQL refused it with ERROR 6497 and the data and ETag were unchanged afterwards. A no-change update is accepted silently (see D-018).
 - Verification: docs/evidence/day-2/d2-1-followup.txt (F1 to F5).
 
+## B-016 - Update error names a path that was not changed
+
+- Status: WATCH
+- Date identified: 2026-10-16
+- Impact: In the D2 step 3 view, a real change to measurements[0].result_status was refused with ERROR 6497, but the error named a different path: Missing UPDATE tag on inspection_card.unit_id, path $.unit.unit_id. In steps 1 and 2 the error named the path that was changed (opened_by, then unit.unit_serial). The refusal itself is correct: the data and the ETag were unchanged afterwards. The error text is not a reliable pointer to the offending change when an array is involved, and the cause is unknown.
+- Control: Characterize it with probes in D2 step 4 (a root field, a nested object field and an array element field, in the same view). Re-check when write annotations are added, because it may affect which annotations an array-element update needs. Do not document the error-path behavior as a rule until it is characterized.
+
 ## Current blocking summary
 
 - Active OPEN blockers: None.
-- Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider), B-012 (second backup copy).
-- Next controlled gate: D2 step 2: add the production unit as a nested object in inspection_card_dv.
+- Remaining WATCH items: B-007 (MySQL REST Service availability), B-008 (generated column vs Duality Views), B-009 (AI model provider), B-012 (second backup copy), B-016 (update error path).
+- Next controlled gate: D2 step 4: add the checklist results as the second nested array in inspection_card_dv.
